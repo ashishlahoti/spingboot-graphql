@@ -1,13 +1,11 @@
-# springboot-api
+# GraphQL Java Kickstart Example
+Examples to demo how to define a GraphQL schema and build GraphQL APIs using `com.graphql-java-kickstart` group libraries.
 
-## Overview
-Build RESTFul API with Spring Boot
-
-## Best Practices Used
-1. Use of short annotations `@GetMapping`, `@PostMapping`, `@PutMapping`, and `@DeleteMapping` in `@RestController` classes
-2. Use of Http Status Codes
-3. Use of Swagger for API docs generation
-4. Use of Custom API Request and Response Logging
-5. Use of `@FeignClient` to generate web client to consume API from other services
-6. Use of `GraphQL` to provide the ability to your API consumers to Query API in felxible way
-7. Use of `Lombok` to generate boilerplate code such as Getters, Setters, Constructor, toString, equals and hashcode
+## GraphQL Java Kickstart
+[GraphQL-Java-Kiskstart](https://github.com/graphql-java-kickstart) provides a wrapper on top of graphql-java and has following features:-
+1. Provide comprehensive Spring boot configuration to customize GraphQL Java Server
+2. Auto-detect schema files in `src/main/resources/*.*/*.graphqls` directory. This is where you write GraphQL schema, queries and mutation.
+3. Concepts of Resolver. Implement `GraphQLQueryResolver`, `GraphQLMutationResolver` and `GraphQLResolver<T>` to specify how to fetch data for the queries, mutation and nested data respectively.
+4. Easy integration with build tools such as GraphiQL, PlayGround and Voyager by adding runtime dependency. Provide comprehensive Spring Boot Configurations to customize these tools.
+5. Easy to write integration test using `GraphQLTestTemplate` provided by test dependency.
+6. Excellent tutorial series by [Philip Starritt](https://github.com/philip-jvm) which gives you quick start. 
