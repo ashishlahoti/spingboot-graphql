@@ -6,7 +6,7 @@ GraphQL is a query language to retrieve data from a server. It is an alternative
 ## GraphQL Java
 [GraphQL-Java](https://www.graphql-java.com/) is the Java (server) implementation for GraphQL. This provides a low level libraries to define GraphQL schema and how the actual data for a query is fetched. You have to write a lot of boilerplate code if you use graphql-java. 
 
-Fortunately, We have two libraries available which provides a wrapper on top of graphql-java and saves use from writing boilerplate code. There are-
+Fortunately, We have two libraries available which provides a wrapper on top of graphql-java and saves use from writing boilerplate code. They are:-
 1. GraphQL Java Kickstart
 2. Netflix DGS
 
@@ -16,11 +16,15 @@ Fortunately, We have two libraries available which provides a wrapper on top of 
 2. Auto-detect schema files in `src/main/resources/*.*/*.graphqls` directory. This is where you write GraphQL schema, queries and mutation.
 3. Concepts of Resolver. Implement `GraphQLQueryResolver`, `GraphQLMutationResolver` and `GraphQLResolver<T>` to specify how to fetch data for the queries, mutation and nested data respectively.   
 4. Easy integration with build tools such as GraphiQL, PlayGround and Voyager by adding runtime dependency. Provide comprehensive Spring Boot Configurations to customize these tools.
-5. Easy to write integration test with GraphQLTestTemplate provided by test dependency.
+5. Easy to write integration test using `GraphQLTestTemplate` provided by test dependency.
 6. Excellent tutorial series by [Philip Starritt](https://github.com/philip-jvm) which gives you quick start. 
 
 ## Netflix DGS
-[Netflix-DGS](https://netflix.github.io/dgs/) is developed by Netflix on top of graphql-java and recently made it public to use.
-1. Auto-detect schema files in `src/main/resources/schema/*.*/*.graphqls` directory. This is where you write GraphQL schema, queries and mutation.
-2. Concepts of DataFetcher. Provide annotations `@DgsComponent` at class level and `@DgsQuery`, `@DgsMutation`, `@DgsData` at method level to specify how to fetch data for the queries, mutation and nested data respectively.
-3. Provide integration with GrahiQL
+[Netflix-DGS](https://netflix.github.io/dgs/) is developed by Netflix on top of graphql-java and recently made it public to use. It has following features:-
+1. Do not provide Spring boot based configurations
+2. Auto-detect schema files in `src/main/resources/schema/*.*/*.graphqls` directory. This is where you write GraphQL schema, queries and mutation.
+3. Concepts of DataFetcher. Provide annotations `@DgsComponent` at class level and `@DgsQuery`, `@DgsMutation`, `@DgsData` at method level to specify how to fetch data for the queries, mutation and nested data respectively.
+4. Provide integration with GraphiQL
+5. Provide good support to write unit and integration test cases using `DgsQueryExecutor`
+6. Follow [example](https://github.com/Netflix/dgs-examples-java) to quick start
+
