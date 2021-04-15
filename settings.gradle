@@ -1,0 +1,4 @@
+rootProject.name = 'springboot-graphql'
+
+include 'graphql-java-kickstart-example'
+include 'netflix-dgs-example'

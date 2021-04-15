@@ -1,0 +1,33 @@
+server:
+  port: 8081
+logging:
+  level:
+    root: INFO
+    com.example.api.client: DEBUG
+feign:
+  client:
+    config:
+      default:
+        loggerLevel: FULL
+graphql:
+  servlet:
+    max-query-depth: 20
+    exception-handlers-enabled: false
+  playground:
+    headers:
+      Authorization: Basic Token
+    tabs:
+      - name: User Query
+        query: classpath:playground/user.graphql
+        variables: classpath:playground/user_variables.json
+      - name: Post Query
+        query: classpath:playground/post.graphql
+        variables: classpath:playground/post_variables.json
+        headers:
+          Accept: application/json
+      - name: Comment Query
+        query: classpath:playground/comment.graphql
+        variables: classpath:playground/comment_variables.json
+    enabled: true
+voyager:
+  enabled: true
