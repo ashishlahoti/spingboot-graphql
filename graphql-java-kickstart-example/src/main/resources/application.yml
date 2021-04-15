@@ -13,6 +13,7 @@ graphql:
   servlet:
     max-query-depth: 20
     exception-handlers-enabled: false
+  extended-scalars: BigDecimal, Date
   playground:
     headers:
       Authorization: Basic Token

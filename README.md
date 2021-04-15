@@ -2,7 +2,7 @@
 This provides examples to use GraphQL in a spring-boot based project.
 
 ## GraphQL
-GraphQL is a query language to retrieve data from a server. It is an alternative to REST, SOAP or gRPC in some way. It provides more power to the consumer to customize the retrieval data.
+GraphQL is a query language to retrieve data from a server. It is an alternative to REST, SOAP or gRPC in some way. It gives more power and flexibility to your API consumer to query only required data.
 ## GraphQL Java
 [GraphQL-Java](https://www.graphql-java.com/) is the Java (server) implementation for GraphQL. This provides a low level libraries to define GraphQL schema and how the actual data for a query is fetched. You have to write a lot of boilerplate code if you use graphql-java. 
 
