@@ -1,40 +1,41 @@
 package com.example.api.datafetcher;
 
-import com.example.api.model.Comment;
 import com.example.api.model.Post;
-import com.example.api.service.CommentService;
+import com.example.api.model.User;
 import com.example.api.service.PostService;
-import com.netflix.graphql.dgs.*;
+import com.netflix.graphql.dgs.DgsComponent;
+import com.netflix.graphql.dgs.DgsData;
+import com.netflix.graphql.dgs.DgsDataFetchingEnvironment;
+import com.netflix.graphql.dgs.DgsQuery;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 @DgsComponent
 @RequiredArgsConstructor
 public class PostDataFetcher {
 
     private final PostService postService;
-    private final CommentService commentService;
 
     @DgsQuery
-    public List<Post> posts(){
+    public List<Post> posts() {
         return postService.getAllPosts();
     }
 
     @DgsQuery
-    public Post postById(String id){
+    public Post postById(String id) {
         return postService.getPostById(Long.parseLong(id));
     }
 
     @DgsQuery
-    public List<Post> postsByUserId(String userId){
+    public List<Post> postsByUserId(String userId) {
         return postService.getAllPostsByUserId(Long.parseLong(userId));
     }
 
-    @DgsData(parentType = "Post")
-    public List<Comment> comments(DgsDataFetchingEnvironment dfe) {
-        Post post = dfe.getSource();
-        return commentService.getAllCommentsByPostId(post.getId());
+    @DgsData(parentType = "User")
+    public CompletableFuture<List<Post>> posts(DgsDataFetchingEnvironment dfe) {
+        User user = dfe.getSource();
+        return CompletableFuture.supplyAsync(() -> postService.getAllPostsByUserId(user.getId()));
     }
-
 }

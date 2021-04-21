@@ -3,7 +3,8 @@ type Post {
     userId: String,
     title: String,
     body: String,
-    comments: [Comment]
+    comments: [Comment],
+    user: User
 }
 
 input CreatePostInput {

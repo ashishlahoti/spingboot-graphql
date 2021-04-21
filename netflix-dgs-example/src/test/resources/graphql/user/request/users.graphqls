@@ -1,0 +1,6 @@
+query GET_ALL_USERS {
+    users {
+        id
+        name
+    }
+}

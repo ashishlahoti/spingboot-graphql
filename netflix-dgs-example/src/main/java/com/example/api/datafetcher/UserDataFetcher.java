@@ -3,19 +3,18 @@ package com.example.api.datafetcher;
 import com.example.api.model.Post;
 import com.example.api.model.User;
 import com.example.api.model.UserInput;
-import com.example.api.service.PostService;
 import com.example.api.service.UserService;
 import com.netflix.graphql.dgs.*;
 import lombok.RequiredArgsConstructor;
 
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 @DgsComponent
 @RequiredArgsConstructor
 public class UserDataFetcher {
 
     private final UserService userService;
-    private final PostService postService;
 
     @DgsQuery
     public List<User> users() {
@@ -28,17 +27,23 @@ public class UserDataFetcher {
     }
 
     @DgsMutation
-    public User createUser(@InputArgument("input") UserInput userInput) { return userService.createUser(userInput); }
+    public User createUser(@InputArgument("input") UserInput userInput) {
+        return userService.createUser(userInput);
+    }
 
     @DgsMutation
-    public User updateUser(@InputArgument("input") UserInput userInput) { return userService.updateUser(userInput); }
+    public User updateUser(@InputArgument("input") UserInput userInput) {
+        return userService.updateUser(userInput);
+    }
 
     @DgsMutation
-    public Boolean deleteUser(String id) { return userService.deleteUser(Long.parseLong(id)); }
+    public Boolean deleteUser(String id) {
+        return userService.deleteUser(Long.parseLong(id));
+    }
 
-    @DgsData(parentType = "User")
-    public List<Post> posts(DgsDataFetchingEnvironment dfe){
-        User user = dfe.getSource();
-        return postService.getAllPostsByUserId(user.getId());
+    @DgsData(parentType = "Post", field = "user")
+    public CompletableFuture<User> userByPost(DgsDataFetchingEnvironment dfe) {
+        Post post = dfe.getSource();
+        return CompletableFuture.supplyAsync(() -> userService.getUserById(post.getUserId()));
     }
 }
