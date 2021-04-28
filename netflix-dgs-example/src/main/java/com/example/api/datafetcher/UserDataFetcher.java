@@ -1,5 +1,6 @@
 package com.example.api.datafetcher;
 
+import com.example.api.context.ContextAwarePoolExecutor;
 import com.example.api.model.Post;
 import com.example.api.model.User;
 import com.example.api.model.UserInput;
@@ -9,12 +10,16 @@ import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 @DgsComponent
 @RequiredArgsConstructor
 public class UserDataFetcher {
 
     private final UserService userService;
+
+    private final ExecutorService executorService = Executors.newFixedThreadPool(5, new ContextAwarePoolExecutor());
 
     @DgsQuery
     public List<User> users() {
@@ -44,6 +49,6 @@ public class UserDataFetcher {
     @DgsData(parentType = "Post", field = "user")
     public CompletableFuture<User> userByPost(DgsDataFetchingEnvironment dfe) {
         Post post = dfe.getSource();
-        return CompletableFuture.supplyAsync(() -> userService.getUserById(post.getUserId()));
+        return CompletableFuture.supplyAsync(() -> userService.getUserById(post.getUserId()), executorService);
     }
 }
