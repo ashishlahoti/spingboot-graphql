@@ -7,7 +7,7 @@ type Post {
     user: User
 }
 
-input CreatePostInput {
+input PostInput {
     userId: String,
     title: String,
     body: String

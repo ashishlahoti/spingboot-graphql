@@ -18,15 +18,15 @@ graphql:
     headers:
       Authorization: Basic Token
     tabs:
-      - name: User Query
+      - name: User
         query: classpath:playground/user.graphql
         variables: classpath:playground/user_variables.json
-      - name: Post Query
+      - name: Post
         query: classpath:playground/post.graphql
         variables: classpath:playground/post_variables.json
         headers:
           Accept: application/json
-      - name: Comment Query
+      - name: Comment
         query: classpath:playground/comment.graphql
         variables: classpath:playground/comment_variables.json
     enabled: true

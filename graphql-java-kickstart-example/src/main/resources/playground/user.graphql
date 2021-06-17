@@ -1,19 +1,27 @@
 query GET_ALL_USERS {
     users {
         id
+        username
         name
+        email
+        phone
+        website
     }
 }
 
 query GET_USER_BY_ID($userId: ID) {
     userById(id: $userId) {
+        id
         name
+        username
     }
 }
 
 query GET_USER_BY_ID_WITH_POSTS($userId: ID) {
     userById(id: $userId) {
+        id
         name
+        username
         posts {
             id
             title
@@ -23,15 +31,40 @@ query GET_USER_BY_ID_WITH_POSTS($userId: ID) {
 
 query GET_USER_BY_ID_WITH_POSTS_AND_COMMENTS($userId: ID) {
     userById(id: $userId) {
+        id
         name
+        username
         posts {
             id
             title
             comments {
+                id
                 email
                 name
                 body
             }
         }
     }
+}
+
+mutation CREATE_USER($name: String, $phone: String, $website: String) {
+    createUser(input: { name: $name, phone: $phone, website: $website }) {
+        id
+        name
+        phone
+        website
+    }
+}
+
+mutation UPDATE_USER_NAME($userId: ID, $name: String, $phone: String, $website: String) {
+    updateUser(id: $userId, input: { name: $name, phone: $phone, website: $website }) {
+        id
+        name
+        phone
+        website
+    }
+}
+
+mutation DELETE_USER($userId: ID) {
+    deleteUser(id: $userId)
 }

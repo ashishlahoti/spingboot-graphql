@@ -24,18 +24,18 @@ public class UserController {
     }
 
     @GetMapping("/{userId}")
-    User getUserById(@PathVariable Long userId){
+    User getUserById(@PathVariable Long userId) {
         return userService.getUserById(userId);
     }
 
     @PostMapping
-    User createUser(@RequestBody UserInput userInput){
+    User createUser(@RequestBody UserInput userInput) {
         return userService.createUser(userInput);
     }
 
-    @PutMapping
-    User updateUser(@RequestBody UserInput userInput) {
-        return userService.updateUser(userInput);
+    @PutMapping("/{userId}")
+    User updateUser(@PathVariable Long userId, @RequestBody UserInput userInput) {
+        return userService.updateUser(userId, userInput);
     }
 
     @DeleteMapping("/{userId}")

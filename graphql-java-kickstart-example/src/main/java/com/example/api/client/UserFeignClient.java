@@ -18,9 +18,9 @@ public interface UserFeignClient {
     @PostMapping("/users")
     User createUser(UserInput userInput);
 
-    @PutMapping("/users")
-    User updateUser(UserInput userInput);
+    @PutMapping("/users/{userId}")
+    User updateUser(@PathVariable Long userId, UserInput userInput);
 
     @DeleteMapping("/users/{userId}")
-    Boolean deleteUser(@PathVariable Long postId);
+    void deleteUser(@PathVariable Long userId);
 }

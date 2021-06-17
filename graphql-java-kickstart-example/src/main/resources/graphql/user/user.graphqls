@@ -1,9 +1,15 @@
 type User {
-    id: ID!,
-    name: String,
+    id: ID!
+    name: String
+    username: String
+    email: String
+    phone: String
+    website: String
     posts: [Post]
 }
 
 input UserInput {
     name: String
+    phone: String
+    website: String
 }

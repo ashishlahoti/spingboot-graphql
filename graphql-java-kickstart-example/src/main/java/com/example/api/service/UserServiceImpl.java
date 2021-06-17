@@ -30,13 +30,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User updateUser(UserInput userInput) {
-        return userFeignClient.updateUser(userInput);
+    public User updateUser(Long id, UserInput userInput) {
+        return userFeignClient.updateUser(id, userInput);
     }
 
     @Override
     public Boolean deleteUser(Long id) {
-        return userFeignClient.deleteUser(id);
+        userFeignClient.deleteUser(id);
+        return true;
     }
 
 }

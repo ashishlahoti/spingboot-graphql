@@ -3,11 +3,9 @@ package com.example.api.model;
 import lombok.Value;
 
 @Value
-public class Post {
+public class PostInput {
 
-    Long id;
     Long userId;
     String title;
     String body;
-
 }
