@@ -14,15 +14,15 @@ public class PostQueryResolver implements GraphQLQueryResolver {
 
     private final PostService postService;
 
-    List<Post> posts(){
+    List<Post> posts() {
         return postService.getAllPosts();
     }
 
-    Post postById(Long postId){
+    Post postById(Long postId) {
         return postService.getPostById(postId);
     }
 
-    List<Post> postByUserId(Long userId){
+    List<Post> postByUserId(Long userId) {
         return postService.getAllPostsByUserId(userId);
     }
 }

@@ -1,6 +1,6 @@
 package com.example.api.graphql.user;
 
-import com.example.api.ApiApplication;
+import com.example.api.KickStartApiApplication;
 import com.graphql.spring.boot.test.GraphQLResponse;
 import com.graphql.spring.boot.test.GraphQLTestTemplate;
 import org.apache.commons.io.IOUtils;
@@ -14,7 +14,7 @@ import org.springframework.http.HttpStatus;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = ApiApplication.class)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = KickStartApiApplication.class)
 public class UserQueryResolverTest {
 
     private static final String GRAPHQL_QUERY_REQUEST_PATH = "graphql/user/request/%s.graphqls";
