@@ -6,8 +6,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@FeignClient(name = "postFeignClient",
-        url = "https://jsonplaceholder.typicode.com")
+@FeignClient(name = "postFeignClient", url = "https://jsonplaceholder.typicode.com")
 public interface PostFeignClient {
     @GetMapping("/posts")
     List<Post> getAllPosts();

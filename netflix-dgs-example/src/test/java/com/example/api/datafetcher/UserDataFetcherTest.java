@@ -49,18 +49,25 @@ public class UserDataFetcherTest {
     @BeforeEach
     private void setup() {
         headers.set("ID-Token", ID_TOKEN);
-        when(userService.getAllUsers()).thenReturn(List.of(new User(1L, "Jon Doe"), new User(2L, "Justin Case")));
+        when(userService.getAllUsers()).thenReturn(
+                List.of(
+                        new User(1L, "Jon Doe"),
+                        new User(2L, "Justin Case")
+                )
+        );
         when(userService.getUserById(anyLong())).thenReturn(new User(1L, "Leanne Graham"));
-        when(postService.getAllPostsByUserId(anyLong())).thenReturn(List.of(new Post(1L, 1L, "post_title", "post_body")));
+        when(postService.getAllPostsByUserId(anyLong())).thenReturn(
+                List.of(
+                        new Post(1L, 1L, "post_title", "post_body")
+                )
+        );
     }
 
     @Test
     @DisplayName("Return valid list of users from graphql query")
-    void users_ReturnValidListOfUsers() throws IOException{
+    void users_ReturnValidListOfUsers() throws IOException {
         String graphQLQuery = read(String.format(GRAPHQL_QUERY_REQUEST_PATH, "users"));
-        List<String> users = dgsQueryExecutor.executeAndExtractJsonPath(
-                graphQLQuery,
-                "data.users[*].id");
+        List<String> users = dgsQueryExecutor.executeAndExtractJsonPath(graphQLQuery, "data.users[*].id");
         Assertions.assertTrue(users.contains("1"));
         Assertions.assertEquals(2, users.size());
     }
@@ -71,7 +78,8 @@ public class UserDataFetcherTest {
         String graphQLQuery = read(String.format(GRAPHQL_QUERY_REQUEST_PATH, "userById"));
         Object result = dgsQueryExecutor.execute(graphQLQuery, Map.of("userId", "1"), null, headers).getData();
         String actualJsonResponse = objectMapper.writeValueAsString(result);
-        String expectedJsonResponse = objectMapper.readValue(read(String.format(GRAPHQL_QUERY_RESPONSE_PATH, "userById")), JsonNode.class).toString();
+        String expectedJsonResponse = objectMapper.readValue(read(String.format(GRAPHQL_QUERY_RESPONSE_PATH, "userById")),
+                JsonNode.class).toString();
         Assertions.assertEquals(expectedJsonResponse, actualJsonResponse);
     }
 

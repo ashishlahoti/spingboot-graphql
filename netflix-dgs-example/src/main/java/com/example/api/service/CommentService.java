@@ -1,9 +1,8 @@
 package com.example.api.service;
 
-import java.util.List;
-
 import com.example.api.model.Comment;
-import com.example.api.model.Post;
+
+import java.util.List;
 
 public interface CommentService {
 

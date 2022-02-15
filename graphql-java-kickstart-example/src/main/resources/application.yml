@@ -2,19 +2,20 @@ server:
   port: 8081
 logging:
   level:
-    root: INFO
-    com.example.api.client: DEBUG
+    root: info
+    com.example.api.client: debug
 feign:
   client:
     config:
       default:
-        loggerLevel: FULL
+        loggerLevel: BASIC #BASIC, FULL, HEADERS, NONE
 graphql:
   servlet:
     max-query-depth: 20
     exception-handlers-enabled: false
   extended-scalars: BigDecimal, Date
   playground:
+    enabled: true
     headers:
       Authorization: Basic Token
     tabs:
@@ -29,6 +30,6 @@ graphql:
       - name: Comment
         query: classpath:playground/comment.graphql
         variables: classpath:playground/comment_variables.json
-    enabled: true
+
 voyager:
   enabled: true

@@ -10,6 +10,7 @@ import java.util.List;
 public class CustomGraphQLErrorHandler implements GraphQLErrorHandler {
     @Override
     public List<GraphQLError> processErrors(List<GraphQLError> errors) {
+        System.out.println("errors = " + errors);
         return errors;
     }
 }

@@ -14,7 +14,7 @@ import java.util.concurrent.CompletableFuture;
 
 @Component
 @RequiredArgsConstructor
-public class PostNestedQueryResolver implements GraphQLResolver<Post> {
+public class PostNestedResolver implements GraphQLResolver<Post> {
 
     private final CommentService commentService;
     private final UserService userService;
