@@ -13,7 +13,7 @@ public class CommentPostResolver implements GraphQLResolver<Comment> {
 
     private final PostService postService;
 
-    Post post(Comment comment) {
+    Post getPost(Comment comment) {
         return postService.getPostById(comment.getPostId());
     }
 }

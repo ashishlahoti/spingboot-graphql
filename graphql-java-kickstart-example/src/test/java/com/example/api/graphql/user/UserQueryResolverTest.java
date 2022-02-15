@@ -26,7 +26,9 @@ public class UserQueryResolverTest {
     @Test
     void user_are_returned() throws IOException {
         String testName = "user";
-        GraphQLResponse graphQLResponse = graphQLTestTemplate.postForResource(String.format(GRAPHQL_QUERY_REQUEST_PATH, testName));
+        GraphQLResponse graphQLResponse = graphQLTestTemplate
+                .postForResource(String.format(GRAPHQL_QUERY_REQUEST_PATH, testName));
+
         String response = read(String.format(GRAPHQL_QUERY_RESPONSE_PATH, testName));
         Assertions.assertEquals(HttpStatus.OK, graphQLResponse.getStatusCode());
         Assertions.assertEquals(response, graphQLResponse.getRawResponse().getBody());

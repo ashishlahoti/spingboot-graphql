@@ -14,15 +14,15 @@ public class CommentQueryResolver implements GraphQLQueryResolver {
 
     private final CommentService commentService;
 
-    List<Comment> comments() {
+    List<Comment> getComments() {
         return commentService.getAllComments();
     }
 
-    Comment commentById(Long commentId) {
+    Comment getCommentById(Long commentId) {
         return commentService.getCommentById(commentId);
     }
 
-    List<Comment> commentByPostId(Long postId) {
+    List<Comment> getCommentByPostId(Long postId) {
         return commentService.getAllCommentsByPostId(postId);
     }
 }

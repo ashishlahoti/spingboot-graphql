@@ -1,3 +1,4 @@
+# Mutation for create, update and delete operations
 type Mutation {
     createUser(input: UserInput): User,
     updateUser(id:ID, input: UserInput): User,

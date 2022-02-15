@@ -23,14 +23,20 @@ dependencies {
 	// https://github.com/graphql-java-kickstart/graphql-spring-boot
 	implementation 'com.graphql-java-kickstart:graphql-spring-boot-starter:11.1.0'
 	testImplementation 'com.graphql-java-kickstart:graphql-spring-boot-starter-test:11.1.0'
+
 	// to embed GraphQL Playground tool at hostname:port/playground
 	runtimeOnly 'com.graphql-java-kickstart:playground-spring-boot-starter:11.1.0'
+
 	// to embed Voyager tool at hostname:post/voyager
 	runtimeOnly 'com.graphql-java-kickstart:voyager-spring-boot-starter:11.1.0'
-    // Lombok and commons for boilerplate code
+
+	// GraphiQL
+	runtimeOnly 'com.graphql-java:graphiql-spring-boot-starter:5.0.2'
+
+	// Lombok and commons for boilerplate code
 	compileOnly 'org.projectlombok:lombok:1.18.22'
 	annotationProcessor 'org.projectlombok:lombok:1.18.22'
-	implementation 'commons-io:commons-io:2.6'
+	implementation 'commons-io:commons-io:2.11.0'
 }
 
 dependencyManagement {

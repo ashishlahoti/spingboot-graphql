@@ -19,11 +19,11 @@ public class PostNestedQueryResolver implements GraphQLResolver<Post> {
     private final CommentService commentService;
     private final UserService userService;
 
-    CompletableFuture<List<Comment>> comments(Post post) {
+    CompletableFuture<List<Comment>> getComments(Post post) {
         return CompletableFuture.supplyAsync(() -> commentService.getAllCommentsByPostId(post.getId()));
     }
 
-    CompletableFuture<User> user(Post post) {
+    CompletableFuture<User> getUser(Post post) {
         return CompletableFuture.supplyAsync(() -> userService.getUserById(post.getUserId()));
     }
 }

@@ -7,9 +7,13 @@ import graphql.kickstart.tools.GraphQLMutationResolver;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+/**
+ * GraphQLMutationResolver to resolve Mutations (Create, Update and Delete Operations). Note the method names and return types.
+ */
 @Component
 @RequiredArgsConstructor
 public class UserMutationResolver implements GraphQLMutationResolver {
+
     private final UserService userService;
 
     User createUser(UserInput input) {
