@@ -4,11 +4,13 @@ import graphql.kickstart.spring.error.ThrowableGraphQLError;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import javax.validation.ConstraintViolationException;
+
 @Component
 public class GraphQLExceptionHandler {
 
-    @ExceptionHandler(GraphQLException.class)
-    public ThrowableGraphQLError handle(GraphQLException e) {
+    @ExceptionHandler({GraphQLException.class, ConstraintViolationException.class})
+    public ThrowableGraphQLError handle(Exception e) {
         return new ThrowableGraphQLError(e);
     }
 

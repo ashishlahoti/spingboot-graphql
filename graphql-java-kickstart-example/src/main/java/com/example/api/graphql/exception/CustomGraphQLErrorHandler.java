@@ -27,7 +27,8 @@ public class CustomGraphQLErrorHandler implements GraphQLErrorHandler {
                 log.info("Error locations:  {}", graphQLError.getLocations());
             });
         }
-        return errors.stream().map(this::getNested).collect(Collectors.toList());
+        return errors;
+        //return errors.stream().map(this::getNested).collect(Collectors.toList());
     }
 
     private GraphQLError getNested(GraphQLError error) {

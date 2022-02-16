@@ -1,11 +1,14 @@
 package com.example.api.graphql.user;
 
+import com.example.api.context.dataloader.DataLoaderRegistryFactory;
 import com.example.api.model.Post;
 import com.example.api.model.User;
 import com.example.api.service.PostService;
 import graphql.kickstart.tools.GraphQLResolver;
+import graphql.schema.DataFetchingEnvironment;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.dataloader.DataLoader;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -29,11 +32,28 @@ public class UserNestedResolver implements GraphQLResolver<User> {
     //        return postService.getAllPostsByUserId(user.getId());
     //    }
 
-    public CompletableFuture<List<Post>> getPosts(User user) {
-        return CompletableFuture.supplyAsync(
-                () -> {
-                    log.info("Getting post for user id {}", user.getId());
-                    return postService.getAllPostsByUserId(user.getId());
-                }, myExecutor);
+    /**
+     * Ejecuta las peticiones en paralelo
+     * @param user
+     * @return
+     */
+    //    public CompletableFuture<List<Post>> getPosts(User user) {
+    //        return CompletableFuture.supplyAsync(
+    //                () -> {
+    //                    log.info("Getting post for user id {}", user.getId());
+    //                    return postService.getAllPostsByUserId(user.getId());
+    //                }, myExecutor);
+    //    }
+
+    /**
+     * Ejecuta las peticiones en paralelo
+     * @param user
+     * @param environment
+     * @return
+     */
+    public CompletableFuture<List<Post>> getPosts(User user, DataFetchingEnvironment environment) {
+        log.info("getPosts - Getting post for user id: {}", user.getId());
+        DataLoader<Long, List<Post>> dataLoader = environment.getDataLoader(DataLoaderRegistryFactory.POST_DATA_LOADER);
+        return dataLoader.load(user.getId(), user);
     }
 }

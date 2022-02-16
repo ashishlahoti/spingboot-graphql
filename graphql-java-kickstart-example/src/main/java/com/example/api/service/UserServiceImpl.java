@@ -8,6 +8,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -19,6 +21,13 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> getAllUsers() {
         return userFeignClient.getAllUsers();
+    }
+
+    @Override
+    public List<User> getAllUsersAfter(Long id) {
+        List<User> userList = getAllUsers();
+        return userList.stream()
+                .dropWhile(user -> !Objects.equals(user.getId(), id)).toList();
     }
 
     @Override

@@ -5,7 +5,7 @@ type User {
     email: String
     phone: String
     website: String
-    #    website: Url
+    # website: Url
     posts: [Post]
     address: Address
 }
@@ -23,5 +23,5 @@ input UserInput {
     email: String
     phone: String
     website: String
-    #    website: Url
+    # website: Url
 }

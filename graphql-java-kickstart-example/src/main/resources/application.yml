@@ -23,6 +23,7 @@ graphql:
     enabled: true
     headers:
       Authorization: Basic Token
+      user_id: "ignachete7"
     tabs:
       - name: User
         query: classpath:playground/user.graphql

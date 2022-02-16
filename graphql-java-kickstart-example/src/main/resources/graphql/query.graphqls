@@ -3,6 +3,8 @@
 type Query {
     # Get All Users
     users: [User],
+    # Get All Users Paginated ()
+    usersPaginated(number: Int!, after: String): UserConnection @connection (for: "User"),
     # Get User by userId
     userById(id:ID): User,
     # Get All Posts

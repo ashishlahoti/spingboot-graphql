@@ -1,3 +1,4 @@
+# Gets All user
 query GET_ALL_USERS {
     users {
         id
@@ -9,11 +10,41 @@ query GET_ALL_USERS {
     }
 }
 
+# Gets All user Paginated
+query GET_ALL_USERS_PAGINATED {
+    usersPaginated(number: 3, after: "2") {
+        pageInfo {
+            hasPreviousPage
+            hasNextPage
+            startCursor
+            endCursor
+        }
+        edges {
+            cursor
+            node {
+                id
+                name
+                username
+                email
+                phone
+                website
+                address {
+                    street
+                    suite
+                    city
+                    zipcode
+                }
+            }
+        }
+    }
+}
+
 query GET_USER_BY_ID($userId: ID) {
     userById(id: $userId) {
         id
         name
         username
+
     }
 }
 
