@@ -1,2 +1,3 @@
-scalar BigDecimal
-scalar Date
+#scalar BigDecimal
+#scalar Date
+scalar Url

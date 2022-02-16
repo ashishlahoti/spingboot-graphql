@@ -4,6 +4,11 @@ logging:
   level:
     root: info
     com.example.api.client: debug
+spring:
+  servlet:
+    multipart:
+      max-file-size: 1MB
+
 feign:
   client:
     config:

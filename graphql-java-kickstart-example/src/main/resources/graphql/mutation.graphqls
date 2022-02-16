@@ -1,7 +1,14 @@
 # Mutation for create, update and delete operations
 type Mutation {
+    # nombre_metodo(lista de argumentos: Tipo): Tipo de retorno
+    # Create User
     createUser(input: UserInput): User,
+    # Update User
     updateUser(id:ID, input: UserInput): User,
+    # Delete User
     deleteUser(id:ID): Boolean,
+    # create Post
     createPost(input: PostInput): Post
+    # Upload File, No input type supplied. return the ID of the uploaded file
+    uploadFile: ID!
 }

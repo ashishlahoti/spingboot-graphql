@@ -5,11 +5,23 @@ type User {
     email: String
     phone: String
     website: String
+    #    website: Url
     posts: [Post]
+    address: Address
+}
+
+type Address {
+    street: String
+    suite: String
+    city: String
+    zipcode: String
 }
 
 input UserInput {
     name: String
+    username: String
+    email: String
     phone: String
     website: String
+    #    website: Url
 }

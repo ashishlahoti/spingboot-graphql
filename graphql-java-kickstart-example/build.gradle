@@ -1,7 +1,7 @@
 plugins {
-	id 'org.springframework.boot' version '2.6.3'
-	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
-	id 'java'
+    id 'org.springframework.boot' version '2.6.3'
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id 'java'
 }
 
 group = 'com.example'
@@ -9,42 +9,47 @@ version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '17'
 
 repositories {
-	mavenCentral()
+    mavenCentral()
 }
 
 ext {
-	set('springCloudVersion', "2021.0.0")
+    set('springCloudVersion', "2021.0.0")
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
-	implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
-	// https://github.com/graphql-java-kickstart/graphql-spring-boot
-	implementation 'com.graphql-java-kickstart:graphql-spring-boot-starter:11.1.0'
-	testImplementation 'com.graphql-java-kickstart:graphql-spring-boot-starter-test:11.1.0'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
+    // https://github.com/graphql-java-kickstart/graphql-spring-boot
+    implementation 'com.graphql-java-kickstart:graphql-spring-boot-starter:11.1.0'
 
-	// to embed GraphQL Playground tool at hostname:port/playground
-	runtimeOnly 'com.graphql-java-kickstart:playground-spring-boot-starter:11.1.0'
+    // Extended scalars
+    implementation ('com.graphql-java:graphql-java-extended-scalars:16.0.1') {
+        exclude group: 'com.graphql-java', module: 'graphql-java'
+    }
+    testImplementation 'com.graphql-java-kickstart:graphql-spring-boot-starter-test:11.1.0'
 
-	// to embed Voyager tool at hostname:post/voyager
-	runtimeOnly 'com.graphql-java-kickstart:voyager-spring-boot-starter:11.1.0'
+    // to embed GraphQL Playground tool at hostname:port/playground
+    runtimeOnly 'com.graphql-java-kickstart:playground-spring-boot-starter:11.1.0'
 
-	// GraphiQL
-	runtimeOnly 'com.graphql-java:graphiql-spring-boot-starter:5.0.2'
+    // to embed Voyager tool at hostname:post/voyager
+    runtimeOnly 'com.graphql-java-kickstart:voyager-spring-boot-starter:11.1.0'
 
-	// Lombok and commons for boilerplate code
-	compileOnly 'org.projectlombok:lombok:1.18.22'
-	annotationProcessor 'org.projectlombok:lombok:1.18.22'
-	implementation 'commons-io:commons-io:2.11.0'
+    // GraphiQL
+    runtimeOnly 'com.graphql-java:graphiql-spring-boot-starter:5.0.2'
+
+    // Lombok and commons for boilerplate code
+    compileOnly 'org.projectlombok:lombok:1.18.22'
+    annotationProcessor 'org.projectlombok:lombok:1.18.22'
+    implementation 'commons-io:commons-io:2.11.0'
 }
 
 dependencyManagement {
-	imports {
-		mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
-	}
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+    }
 }
 
 test {
-	useJUnitPlatform()
+    useJUnitPlatform()
 }

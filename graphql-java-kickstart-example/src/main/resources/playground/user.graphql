@@ -47,21 +47,25 @@ query GET_USER_BY_ID_WITH_POSTS_AND_COMMENTS($userId: ID) {
     }
 }
 
-mutation CREATE_USER($name: String, $phone: String, $website: String) {
-    createUser(input: { name: $name, phone: $phone, website: $website }) {
+mutation CREATE_USER($name: String, $phone: String, $website: String, $username: String, $email: String) {
+    createUser(input: { name: $name, phone: $phone, website: $website, username: $username, email: $email }) {
         id
         name
         phone
         website
+        username
+        email
     }
 }
 
-mutation UPDATE_USER_NAME($userId: ID, $name: String, $phone: String, $website: String) {
-    updateUser(id: $userId, input: { name: $name, phone: $phone, website: $website }) {
+mutation UPDATE_USER_NAME($userId: ID, $name: String, $phone: String, $website: String, $username: String, $email: String) {
+    updateUser(id: $userId, input: { name: $name, phone: $phone, website: $website, username: $username, email: $email  }) {
         id
         name
         phone
         website
+        username
+        email
     }
 }
 

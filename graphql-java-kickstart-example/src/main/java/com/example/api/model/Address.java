@@ -6,10 +6,9 @@ import lombok.Value;
  * @Value Generates a lot of code which fits with a class that is a representation of an immutable entity.
  */
 @Value
-public class UserInput {
-    String name;
-    String username;
-    String email;
-    String phone;
-    String website;
+public class Address {
+    String street;
+    String suite;
+    String city;
+    String zipcode;
 }
