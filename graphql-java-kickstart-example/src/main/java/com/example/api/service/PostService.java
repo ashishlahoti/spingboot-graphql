@@ -5,6 +5,7 @@ import com.example.api.model.User;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public interface PostService {
 
@@ -17,6 +18,8 @@ public interface PostService {
     Map<Long, List<Post>> getAllPostsByUserId(Map<Long, User> userIds, String userId);
 
     Map<Long, List<Post>> getAllPostsByUserId(List<User> users, String userId);
+
+    Map<Long, List<Post>> getAllPostsByUserId(Set<Long> users, String userId);
 
     Post createPost(Post post);
 

@@ -12,11 +12,14 @@ import java.util.concurrent.Executor;
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class ExecutorFactory {
 
+    private final TaskDecorator mdcContextTaskDecorator;
+
     public Executor newExecutor() {
         var executor = new ThreadPoolTaskExecutor();
         executor.setCorePoolSize(Runtime.getRuntime().availableProcessors());
         executor.setMaxPoolSize(Runtime.getRuntime().availableProcessors());
         executor.setKeepAliveSeconds(0);
+        executor.setTaskDecorator(mdcContextTaskDecorator);
         executor.initialize();
         return executor;
     }

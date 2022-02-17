@@ -1,17 +1,18 @@
 package com.example.api.context.dataloader;
 
+import com.example.api.model.Post;
+import com.example.api.model.User;
 import com.example.api.service.PostService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.dataloader.BatchLoaderEnvironment;
 import org.dataloader.DataLoader;
 import org.dataloader.DataLoaderFactory;
 import org.dataloader.DataLoaderRegistry;
 import org.springframework.stereotype.Component;
 
-import java.math.BigDecimal;
 import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executor;
 
@@ -23,7 +24,7 @@ public class DataLoaderRegistryFactory {
     public static final String POST_DATA_LOADER = "POST_DATA_LOADER";
 
     private final PostService postService;
-    private final Executor otherExecutor;
+    private final Executor myExecutor;
 
     public DataLoaderRegistry create(String userId) {
         var registry = new DataLoaderRegistry();
@@ -31,8 +32,8 @@ public class DataLoaderRegistryFactory {
         return registry;
     }
 
-    //    private DataLoader<UUID, BigDecimal> createPostDataLoader(String userId) {
-    //        return DataLoaderFactory.newMappedDataLoader((userIds, env) ->
+    //    private DataLoader<Long, List<Post>> createPostDataLoader(String userId) {
+    //        return DataLoaderFactory.newMappedDataLoader(userIds, env ->
     //                CompletableFuture.supplyAsync(() -> {
     //                            log.info("userIds = {}", userIds);
     //                            log.info("getKeyContexts = {}", env.getKeyContexts());
@@ -42,14 +43,19 @@ public class DataLoaderRegistryFactory {
     //                        otherExecutor));
     //    }
 
-    private DataLoader<UUID, BigDecimal> createPostDataLoader(String userId) {
-        return DataLoaderFactory.newMappedDataLoader((userIds, env) ->
-                CompletableFuture.supplyAsync(() -> {
-                            log.info("userIds = {}", userIds);
-                            log.info("getKeyContexts = {}", env.getKeyContexts());
-                            log.info("getKeyContextsList = {}", env.getKeyContextsList());
-                            return postService.getAllPostsByUserId((List) env.getKeyContextsList(), userId);
-                        },
-                        otherExecutor));
+    //    private DataLoader<Long, List<Post>> createPostDataLoader(String userId) {
+    //        return DataLoaderFactory.newMappedDataLoader(userIds, env ->
+    //                CompletableFuture.supplyAsync(() -> {
+    //                            log.info("userIds = {}", userIds);
+    //                            log.info("getKeyContexts = {}", env.getKeyContexts());
+    //                            log.info("getKeyContextsList = {}", env.getKeyContextsList());
+    //                            return postService.getAllPostsByUserId((List) env.getKeyContextsList(), userId);
+    //                        },
+    //                        myExecutor));
+    //    }
+
+    private DataLoader<Long, List<Post>> createPostDataLoader(String userId) {
+        return DataLoaderFactory.newMappedDataLoader((Set<Long> userIds) ->
+                CompletableFuture.supplyAsync(() -> postService.getAllPostsByUserId(userIds, userId), myExecutor));
     }
 }

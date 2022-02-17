@@ -4,11 +4,12 @@ logging:
   level:
     root: info
     com.example.api.client: debug
+  pattern:
+    console: -%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(%5p) %clr(${PID:}){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %clr(%X{correlation_ID}){red} %m%n%wEx
 spring:
   servlet:
     multipart:
       max-file-size: 1MB
-
 feign:
   client:
     config:
@@ -17,8 +18,9 @@ feign:
 graphql:
   servlet:
     max-query-depth: 20
-    exception-handlers-enabled: false
-  extended-scalars: BigDecimal, Date
+    exception-handlers-enabled: true
+    tracing-enabled: true # Habilita las trazas de graphQL
+  extended-scalars: BigDecimal, Date, Url
   playground:
     enabled: true
     headers:
@@ -39,3 +41,4 @@ graphql:
 
 voyager:
   enabled: true
+

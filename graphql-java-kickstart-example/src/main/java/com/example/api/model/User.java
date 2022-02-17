@@ -7,7 +7,10 @@ import lombok.Value;
  */
 @Value
 public class User {
+
     Long id;
+//    @GraphQLName("name")
+//    @GraphQLField
     String name;
     String username;
     String email;

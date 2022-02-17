@@ -16,9 +16,4 @@ public class AsyncExecutorConfig {
     public Executor myExecutor(ExecutorFactory executorFactory) {
         return executorFactory.newExecutor();
     }
-
-    @Bean
-    public Executor otherExecutor() {
-        return Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
-    }
 }

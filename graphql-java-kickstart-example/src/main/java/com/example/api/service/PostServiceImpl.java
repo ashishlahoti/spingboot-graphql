@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -68,4 +69,11 @@ public class PostServiceImpl implements PostService {
         return result;
     }
 
+    @Override
+    public Map<Long, List<Post>> getAllPostsByUserId(Set<Long> users, String userId) {
+        log.info("getAllPostsByUserId - Requesting batch post of userIds: {} for user Id: {}", users, userId);
+        Map<Long, List<Post>> result = new HashMap<>();
+        users.forEach(user -> result.put(user, postFeignClient.getPostByUserId(user)));
+        return result;
+    }
 }
