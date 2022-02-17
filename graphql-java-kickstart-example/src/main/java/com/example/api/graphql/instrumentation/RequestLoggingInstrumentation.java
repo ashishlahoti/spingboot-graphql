@@ -1,4 +1,4 @@
-package com.example.api.instrumentation;
+package com.example.api.graphql.instrumentation;
 
 import graphql.ExecutionResult;
 import graphql.execution.instrumentation.InstrumentationContext;
@@ -32,13 +32,13 @@ public class RequestLoggingInstrumentation extends SimpleInstrumentation {
     @Override
     public InstrumentationContext<ExecutionResult> beginExecution(InstrumentationExecutionParameters parameters) {
         var start = Instant.now();
-        var executionId = parameters.getExecutionInput().getExecutionId();
+        //var executionId = parameters.getExecutionInput().getExecutionId();
 
         // MDC class hides and serves as a substitute for the underlying logging system's MDC implementation.
         // Put a diagnostic context value (the val parameter) as identified with the key parameter into the current
         // thread's diagnostic context map. The key parameter cannot be null. The val parameter can be null only if
         // the underlying implementation supports it.
-        MDC.put(CORRELATION_ID, executionId.toString());
+        //MDC.put(CORRELATION_ID, executionId.toString());
 
         log.info("Operation: {} with variables: {}", parameters.getOperation(), parameters.getVariables());
         return SimpleInstrumentationContext.whenCompleted((executionResult, throwable) -> {

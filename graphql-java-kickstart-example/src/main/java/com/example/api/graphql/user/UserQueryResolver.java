@@ -1,6 +1,6 @@
 package com.example.api.graphql.user;
 
-import com.example.api.context.CustomGraphQLContext;
+import com.example.api.graphql.context.CustomGraphQLContext;
 import com.example.api.model.User;
 import com.example.api.service.UserService;
 import graphql.kickstart.tools.GraphQLQueryResolver;
@@ -29,10 +29,12 @@ public class UserQueryResolver implements GraphQLQueryResolver {
 
     private final UserService userService;
 
+    // @PreAuthorize("hasAuthority('get:users')")
     List<User> getUsers() {
         return userService.getAllUsers();
     }
 
+    // @PreAuthorize("hasAuthority('get:users')")
     public Connection<User> getUsersPaginated(int number, @Nullable String cursor) {
         log.info("Get next {} users paginated from cursor {}", number, cursor);
         List<Edge<User>> edges = getUsersWithCursor(cursor).stream()
@@ -63,6 +65,7 @@ public class UserQueryResolver implements GraphQLQueryResolver {
      *               where you can find out information to help you resolve a data value given a graphql field input
      * @return User
      */
+    //@PreAuthorize("hasAuthority('get:users')")
     public User getUserById(Long userId, DataFetchingEnvironment env) {
         // Selection fields set requested
         log.info(">>>>>> Selection set:");
@@ -79,6 +82,4 @@ public class UserQueryResolver implements GraphQLQueryResolver {
 
         return userService.getUserById(userId);
     }
-
-
 }

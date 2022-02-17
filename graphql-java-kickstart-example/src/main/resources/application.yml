@@ -1,31 +1,25 @@
 server:
   port: 8081
-logging:
-  level:
-    root: info
-    com.example.api.client: debug
-  pattern:
-    console: -%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(%5p) %clr(${PID:}){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %clr(%X{correlation_ID}){red} %m%n%wEx
+  http2:
+    enabled: true
 spring:
   servlet:
     multipart:
       max-file-size: 1MB
-feign:
-  client:
-    config:
-      default:
-        loggerLevel: BASIC #BASIC, FULL, HEADERS, NONE
+
 graphql:
   servlet:
     max-query-depth: 20
     exception-handlers-enabled: true
-    tracing-enabled: true # Habilita las trazas de graphQL
+    tracing-enabled: false # Habilita las trazas de graphQL
   extended-scalars: BigDecimal, Date, Url
   playground:
     enabled: true
     headers:
-      Authorization: Basic Token
-      user_id: "ignachete7"
+
+      Authorization: Bearer TOKEN # Bearer TOKEN | Basic Token
+      user_id: IDP|ignachete7
+      user_roles: get:users
     tabs:
       - name: User
         query: classpath:playground/user.graphql
@@ -41,4 +35,17 @@ graphql:
 
 voyager:
   enabled: true
+
+logging:
+  level:
+    root: info
+    com.example.api.client: debug
+  pattern:
+    console: -%clr(%d{yyyy-MM-dd HH:mm:ss.SSS}){faint} %clr(%5p) %clr(${PID:}){magenta} %clr(---){faint} %clr([%15.15t]){faint} %clr(%-40.40logger{39}){cyan} %clr(:){faint} %clr(%X{correlation_ID}){red} %m%n%wEx
+
+feign:
+  client:
+    config:
+      default:
+        loggerLevel: BASIC #BASIC, FULL, HEADERS, NONE
 

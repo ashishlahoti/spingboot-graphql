@@ -1,4 +1,4 @@
-package com.example.api.context.dataloader;
+package com.example.api.graphql.context.dataloader;
 
 import com.example.api.model.Post;
 import com.example.api.model.User;

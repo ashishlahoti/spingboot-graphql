@@ -1,4 +1,4 @@
-package com.example.api.listener;
+package com.example.api.graphql.listener;
 
 import graphql.kickstart.servlet.core.GraphQLServletListener;
 import lombok.RequiredArgsConstructor;

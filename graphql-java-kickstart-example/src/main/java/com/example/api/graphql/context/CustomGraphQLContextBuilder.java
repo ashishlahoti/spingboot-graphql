@@ -1,17 +1,21 @@
-package com.example.api.context;
+package com.example.api.graphql.context;
 
-import com.example.api.context.dataloader.DataLoaderRegistryFactory;
+import com.example.api.graphql.context.dataloader.DataLoaderRegistryFactory;
 import graphql.kickstart.execution.context.GraphQLContext;
 import graphql.kickstart.servlet.context.DefaultGraphQLServletContext;
 import graphql.kickstart.servlet.context.GraphQLServletContextBuilder;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.slf4j.MDC;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.websocket.Session;
 import javax.websocket.server.HandshakeRequest;
+import java.util.UUID;
+
+import static com.example.api.graphql.instrumentation.RequestLoggingInstrumentation.CORRELATION_ID;
 
 /**
  * Custom GraphQLServletContextBuilder
@@ -33,7 +37,7 @@ public class CustomGraphQLContextBuilder implements GraphQLServletContextBuilder
     @Override
     public GraphQLContext build(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) {
 
-        //MDC.put(CORRELATION_ID, UUID.randomUUID().toString());
+        MDC.put(CORRELATION_ID, UUID.randomUUID().toString());
 
         var userId = httpServletRequest.getHeader("user_id");
         log.info("userId: {}", userId);

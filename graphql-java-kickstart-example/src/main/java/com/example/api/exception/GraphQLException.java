@@ -1,4 +1,4 @@
-package com.example.api.graphql.exception;
+package com.example.api.exception;
 
 public class GraphQLException extends RuntimeException {
 

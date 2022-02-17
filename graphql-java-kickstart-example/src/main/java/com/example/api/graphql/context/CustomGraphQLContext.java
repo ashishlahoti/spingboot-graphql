@@ -1,4 +1,4 @@
-package com.example.api.context;
+package com.example.api.graphql.context;
 
 import graphql.kickstart.servlet.context.GraphQLServletContext;
 import lombok.Getter;

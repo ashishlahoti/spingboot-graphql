@@ -28,6 +28,10 @@ dependencies {
     // https://github.com/graphql-java-kickstart/graphql-spring-boot
     implementation 'com.graphql-java-kickstart:graphql-spring-boot-starter:12.0.0'
 
+    // Security
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    implementation 'org.springframework.security:spring-security-test'
+
     // Validations
     implementation 'org.hibernate.validator:hibernate-validator'
 
