@@ -32,6 +32,9 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.security:spring-security-test'
 
+    // Cache
+    implementation 'com.github.ben-manes.caffeine:caffeine:3.0.5'
+
     // Validations
     implementation 'org.hibernate.validator:hibernate-validator'
 

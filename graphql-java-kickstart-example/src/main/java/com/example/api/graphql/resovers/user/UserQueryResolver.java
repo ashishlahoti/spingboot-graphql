@@ -1,4 +1,4 @@
-package com.example.api.graphql.user;
+package com.example.api.graphql.resovers.user;
 
 import com.example.api.graphql.context.CustomGraphQLContext;
 import com.example.api.model.User;

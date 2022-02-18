@@ -1,4 +1,4 @@
-package com.example.api.graphql.post;
+package com.example.api.graphql.resovers.post;
 
 import com.example.api.model.Comment;
 import com.example.api.model.Post;

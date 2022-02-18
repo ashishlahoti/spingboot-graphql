@@ -1,4 +1,4 @@
-package com.example.api.config;
+package com.example.api.config.graphQL;
 
 import graphql.scalars.ExtendedScalars;
 import graphql.schema.GraphQLScalarType;

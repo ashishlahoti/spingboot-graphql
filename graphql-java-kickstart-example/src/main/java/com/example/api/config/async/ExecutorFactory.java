@@ -1,4 +1,4 @@
-package com.example.api.config;
+package com.example.api.config.async;
 
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -19,7 +19,7 @@ public final class ExecutorFactory {
         executor.setCorePoolSize(Runtime.getRuntime().availableProcessors());
         executor.setMaxPoolSize(Runtime.getRuntime().availableProcessors());
         executor.setKeepAliveSeconds(0);
-        executor.setTaskDecorator(mdcContextTaskDecorator);
+        executor.setTaskDecorator(mdcContextTaskDecorator); // Specify a custom TaskDecorator to be applied to any Runnable about to be executed.
         executor.initialize();
         return executor;
     }
