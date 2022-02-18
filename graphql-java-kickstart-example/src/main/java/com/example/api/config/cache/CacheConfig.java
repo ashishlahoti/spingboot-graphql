@@ -36,7 +36,7 @@ public class CacheConfig {
                                                             // from the cache once a fixed duration has elapsed
                 .maximumSize(100L) // Specifies the maximum number of entries the cache may contain.
                 .removalListener((key, value, cause) ->
-                        log.info("Key {} with value {} was removed from the response cache. Cause {}", key, value, cause)
+                        log.info("###### Key {} with value {} was removed from the response cache. Cause {} ######", key, value, cause)
                 )   // Specifies a listener instance that caches should notify each time an entry is removed for any reason.
                 .build();
     }
