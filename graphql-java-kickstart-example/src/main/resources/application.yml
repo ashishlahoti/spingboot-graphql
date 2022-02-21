@@ -16,7 +16,6 @@ graphql:
   playground:
     enabled: true
     headers:
-
       Authorization: Bearer TOKEN # Bearer TOKEN | Basic Token
       user_id: IDP|ignachete7
       user_roles: get:users
