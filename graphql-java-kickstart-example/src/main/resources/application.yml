@@ -11,12 +11,12 @@ graphql:
   servlet:
     max-query-depth: 20
     exception-handlers-enabled: true
-    tracing-enabled: false # Habilita las trazas de graphQL
+    tracing-enabled: false # Habilita/Deshabilita las trazas de graphQL
   extended-scalars: BigDecimal, Date, Url
   playground:
     enabled: true
     headers:
-      Authorization: Bearer TOKEN # Bearer TOKEN | Basic Token
+      Authorization: Bearer TOKEN # Possible options: Bearer TOKEN | Basic Token
       user_id: IDP|ignachete7
       user_roles: get:users
     tabs:
@@ -46,5 +46,5 @@ feign:
   client:
     config:
       default:
-        loggerLevel: BASIC #BASIC, FULL, HEADERS, NONE
+        loggerLevel: BASIC #Possible options: BASIC, FULL, HEADERS, NONE
 
