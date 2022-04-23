@@ -34,7 +34,6 @@ public class GrantedAuthorityFactory {
         return Stream.of(userRoles.split(","))
                 .map(SimpleGrantedAuthority::new)
                 .toList();
-                //.collect(Collectors.toList());
     }
 
 }

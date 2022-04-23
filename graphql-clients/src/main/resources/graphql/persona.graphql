@@ -1,0 +1,21 @@
+#{
+#    findPersona(searchCriteria: {email: "jose-ignacio.martin@klarna.com"}) {
+#        id
+#        contactEmail
+#        billingAddress {
+#            streetAddress
+#            city
+#        }
+#    }
+#}
+
+query PERSONA($email: String){
+    findPersona(searchCriteria: {email: $email}) {
+        id
+        contactEmail
+#        billingAddress {
+#            streetAddress
+#            city
+#        }
+    }
+}

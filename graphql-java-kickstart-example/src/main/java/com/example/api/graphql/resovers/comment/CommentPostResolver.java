@@ -24,7 +24,7 @@ public class CommentPostResolver implements GraphQLResolver<Comment> {
     public CompletableFuture<Post> getPost(Comment comment) {
         return CompletableFuture.supplyAsync(
                 () -> {
-                    log.info("Getting post for user id {}", comment.getPostId());
+                    log.info("Getting post for post id {}", comment.getPostId());
                     return postService.getPostById(comment.getPostId());
                 }, myExecutor);
     }

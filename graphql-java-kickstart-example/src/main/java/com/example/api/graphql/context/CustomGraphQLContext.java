@@ -54,5 +54,4 @@ public class CustomGraphQLContext implements GraphQLServletContext {
     public DataLoaderRegistry getDataLoaderRegistry() {
         return context.getDataLoaderRegistry();
     }
-
 }

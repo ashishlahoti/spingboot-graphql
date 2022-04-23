@@ -44,7 +44,14 @@ query GET_USER_BY_ID($userId: ID) {
         id
         name
         username
+    }
+}
 
+query GET_USER_BY_IDS {
+    usersByIds(ids: [1, 2, 3]) {
+        id
+        name
+        username
     }
 }
 
@@ -78,8 +85,22 @@ query GET_USER_BY_ID_WITH_POSTS_AND_COMMENTS($userId: ID) {
     }
 }
 
-mutation CREATE_USER($name: String, $phone: String, $website: String, $username: String, $email: String) {
-    createUser(input: { name: $name, phone: $phone, website: $website, username: $username, email: $email }) {
+mutation CREATE_USER(
+    $name: String
+    $phone: String
+    $website: String
+    $username: String
+    $email: String
+) {
+    createUser(
+        input: {
+            name: $name
+            phone: $phone
+            website: $website
+            username: $username
+            email: $email
+        }
+    ) {
         id
         name
         phone
@@ -89,8 +110,24 @@ mutation CREATE_USER($name: String, $phone: String, $website: String, $username:
     }
 }
 
-mutation UPDATE_USER_NAME($userId: ID, $name: String, $phone: String, $website: String, $username: String, $email: String) {
-    updateUser(id: $userId, input: { name: $name, phone: $phone, website: $website, username: $username, email: $email  }) {
+mutation UPDATE_USER_NAME(
+    $userId: ID
+    $name: String
+    $phone: String
+    $website: String
+    $username: String
+    $email: String
+) {
+    updateUser(
+        id: $userId
+        input: {
+            name: $name
+            phone: $phone
+            website: $website
+            username: $username
+            email: $email
+        }
+    ) {
         id
         name
         phone

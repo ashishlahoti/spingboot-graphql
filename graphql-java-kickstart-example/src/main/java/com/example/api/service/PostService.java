@@ -21,6 +21,8 @@ public interface PostService {
 
     Map<Long, List<Post>> getAllPostsByUserId(Set<Long> users, String userId);
 
+    Map<Long, List<Post>> getAllPostsByUserId(Set<Long> users);
+
     Post createPost(Post post);
 
     void updatePost(Long postId, Post post);

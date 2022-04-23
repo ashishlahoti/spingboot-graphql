@@ -23,7 +23,6 @@ ext {
 
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
     implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
     // https://github.com/graphql-java-kickstart/graphql-spring-boot
     implementation 'com.graphql-java-kickstart:graphql-spring-boot-starter:12.0.0'
@@ -38,10 +37,13 @@ dependencies {
     // Validations
     implementation 'org.hibernate.validator:hibernate-validator'
 
+    implementation 'commons-io:commons-io:2.11.0'
+
     // Extended scalars
     implementation ('com.graphql-java:graphql-java-extended-scalars:17.0') {
         exclude group: 'com.graphql-java', module: 'graphql-java'
     }
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'com.graphql-java-kickstart:graphql-spring-boot-starter-test:12.0.0'
 
     // to embed GraphQL Playground tool at hostname:port/playground
@@ -56,7 +58,6 @@ dependencies {
     // Lombok and commons for boilerplate code
     compileOnly 'org.projectlombok:lombok:1.18.22'
     annotationProcessor 'org.projectlombok:lombok:1.18.22'
-    implementation 'commons-io:commons-io:2.11.0'
 }
 
 dependencyManagement {

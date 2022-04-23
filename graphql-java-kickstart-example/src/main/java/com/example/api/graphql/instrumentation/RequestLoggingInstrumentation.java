@@ -24,6 +24,7 @@ import java.time.Instant;
 public class RequestLoggingInstrumentation extends SimpleInstrumentation {
 
     public static final String CORRELATION_ID = "correlation_ID";
+    public static final String SECURITY_CONTEXT = "security_context";
     /**
      * This is called right at the start of query execution and its the first step in the instrumentation chain.
      * @param parameters

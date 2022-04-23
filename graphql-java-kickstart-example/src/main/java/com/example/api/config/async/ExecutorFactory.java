@@ -2,8 +2,11 @@ package com.example.api.config.async;
 
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
+import org.springframework.context.annotation.Bean;
+import org.springframework.core.task.AsyncTaskExecutor;
 import org.springframework.core.task.TaskDecorator;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
+import org.springframework.security.task.DelegatingSecurityContextAsyncTaskExecutor;
 import org.springframework.stereotype.Component;
 
 import java.util.concurrent.Executor;
@@ -21,7 +24,6 @@ public final class ExecutorFactory {
         executor.setKeepAliveSeconds(0);
         executor.setTaskDecorator(mdcContextTaskDecorator); // Specify a custom TaskDecorator to be applied to any Runnable about to be executed.
         executor.initialize();
-        return executor;
+        return new DelegatingSecurityContextAsyncTaskExecutor(executor);
     }
-
 }

@@ -7,6 +7,8 @@ type Query {
     usersPaginated(number: Int!, after: String): UserConnection @connection (for: "User"),
     # Get User by userId
     userById(id:ID): User,
+    # Get User by userIds
+    usersByIds(ids:[ID]): [User],
     # Get All Posts
     posts: [Post],
     # Get Post by postId
@@ -18,5 +20,5 @@ type Query {
     # Get Comment by commentId
     commentById(id:ID): Comment
     # Get All Comments by postId
-    commentByPostId(postId:ID): [Comment]
+    commentsByPostId(postId:ID): [Comment]
 }

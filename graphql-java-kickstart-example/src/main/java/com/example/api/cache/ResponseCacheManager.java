@@ -64,12 +64,12 @@ public class ResponseCacheManager implements GraphQLResponseCacheManager {
      * @return
      */
     private RequestKey getRequestKey(HttpServletRequest request, GraphQLInvocationInput invocationInput) {
-        log.info("RequestKey >> {},  {},  {}, {}, {}",
+        log.info("RequestKey >> {},  {},  {}, {}", // , {}",
                 getUserId(request),
                 ((GraphQLSingleInvocationInput) invocationInput).getExecutionInput().getOperationName(),
                 ((GraphQLSingleInvocationInput) invocationInput).getExecutionInput().getVariables(),
-                ((GraphQLSingleInvocationInput) invocationInput).getExecutionInput().getExtensions(),
-                ((GraphQLSingleInvocationInput) invocationInput).getExecutionInput().getQuery());
+                ((GraphQLSingleInvocationInput) invocationInput).getExecutionInput().getExtensions());
+//                ((GraphQLSingleInvocationInput) invocationInput).getExecutionInput().getQuery());
 
         return new RequestKey(getUserId(request),
                 ((GraphQLSingleInvocationInput) invocationInput).getExecutionInput().getQuery(),
@@ -87,7 +87,8 @@ public class ResponseCacheManager implements GraphQLResponseCacheManager {
     private String getUserId(HttpServletRequest request) {
         var userId = request.getHeader(GraphQLSecurityConfig.USER_ID_PRE_AUTH_HEADER);
         if (userId == null) {
-            throw new IllegalArgumentException("User Id is null. Cannot read from ResponseCacheManager.");
+            // throw new IllegalArgumentException("User Id is null. Cannot read from ResponseCacheManager.");
+            userId = "IDP|ignachete7";
         }
         return userId;
     }

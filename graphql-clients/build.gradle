@@ -1,0 +1,33 @@
+plugins {
+    id 'org.springframework.boot' version '2.6.3'
+    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+    id 'java'
+}
+
+group = 'com.graphql.clients'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '17'
+
+repositories {
+    mavenCentral()
+}
+
+compileJava {
+    sourceCompatibility = '17'
+    targetCompatibility = '17'
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter'
+    // developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    implementation "com.graphql-java-kickstart:graphql-webclient-spring-boot-starter:1.0.0"
+    // implementation 'com.graphql-java-kickstart:graphql-spring-boot-starter:12.0.0'
+    // Lombok and commons for boilerplate code
+    compileOnly 'org.projectlombok:lombok:1.18.22'
+    annotationProcessor 'org.projectlombok:lombok:1.18.22'
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}

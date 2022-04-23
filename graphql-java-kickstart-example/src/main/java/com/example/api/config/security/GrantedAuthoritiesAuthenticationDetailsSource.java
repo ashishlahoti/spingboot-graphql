@@ -12,11 +12,11 @@ import static com.example.api.config.security.GraphQLSecurityConfig.USER_ROLES_P
  * This AuthenticationDetails implementation allows for storing a list of pre-authenticated Granted Authorities.
  */
 @Slf4j
-public class GrantedAuthoritiesAuthenticationDetailsSource implements AuthenticationDetailsSource<HttpServletRequest,
-        PreAuthenticatedGrantedAuthoritiesWebAuthenticationDetails> {
+public class GrantedAuthoritiesAuthenticationDetailsSource implements AuthenticationDetailsSource<HttpServletRequest, PreAuthenticatedGrantedAuthoritiesWebAuthenticationDetails> {
 
     /**
      * Called by a class when it wishes a new authentication details instance to be created.
+     *
      * @param request
      * @return
      */

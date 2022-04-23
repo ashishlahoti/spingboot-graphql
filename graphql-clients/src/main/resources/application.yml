@@ -1,0 +1,10 @@
+graphql:
+  client:
+#    url: http://localhost:8081/graphql
+    url: https://persona-gateway-eu.staging.c2c.klarna.net/graphql
+#    oauth2:
+#      client-id: "OAuth2 client id"
+#      client-secret: "OAuth2 client secret"
+#      token-uri: "Token URI of the identity provider"
+#      authorization-grant-type: "By default the grant type client_credentials is used"
+

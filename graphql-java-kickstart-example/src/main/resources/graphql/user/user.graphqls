@@ -1,3 +1,7 @@
+# User Description: harum non quasi et ratione
+#tempore iure ex voluptates in ratione
+#harum architecto fugit inventore cupiditate
+#voluptates magni quo et
 type User {
     id: ID!
     name: String
@@ -8,15 +12,31 @@ type User {
     # website: Url
     posts: [Post]
     address: Address
+    company: Company
 }
-
+# Address Description: harum non quasi et ratione
+#tempore iure ex voluptates in ratione
+#harum architecto fugit inventore cupiditate
+#voluptates magni quo et
 type Address {
     street: String
     suite: String
     city: String
     zipcode: String
 }
-
+# Company Description: harum non quasi et ratione
+#tempore iure ex voluptates in ratione
+#harum architecto fugit inventore cupiditate
+#voluptates magni quo et
+type Company {
+    name: String
+    catchPhrase: String
+    bs: String
+}
+# User Input: harum non quasi et ratione
+##tempore iure ex voluptates in ratione
+##harum architecto fugit inventore cupiditate
+##voluptates magni quo et
 input UserInput {
     name: String
     username: String

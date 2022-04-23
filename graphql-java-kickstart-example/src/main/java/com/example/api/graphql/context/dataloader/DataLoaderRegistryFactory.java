@@ -22,13 +22,16 @@ import java.util.concurrent.Executor;
 public class DataLoaderRegistryFactory {
 
     public static final String POST_DATA_LOADER = "POST_DATA_LOADER";
+    public static final String POST_DATA_LOADER_2 = "POST_DATA_LOADER_2";
 
+    private final PostDataLoader postDataLoader;
     private final PostService postService;
     private final Executor myExecutor;
 
     public DataLoaderRegistry create(String userId) {
-        var registry = new DataLoaderRegistry();
+        DataLoaderRegistry registry = new DataLoaderRegistry();
         registry.register(POST_DATA_LOADER, createPostDataLoader(userId));
+        registry.register(POST_DATA_LOADER_2, DataLoaderFactory.newMappedDataLoader(postDataLoader));
         return registry;
     }
 
@@ -55,7 +58,11 @@ public class DataLoaderRegistryFactory {
     //    }
 
     private DataLoader<Long, List<Post>> createPostDataLoader(String userId) {
-        return DataLoaderFactory.newMappedDataLoader((Set<Long> userIds) ->
-                CompletableFuture.supplyAsync(() -> postService.getAllPostsByUserId(userIds, userId), myExecutor));
+        return DataLoaderFactory.newMappedDataLoader(
+                (Set<Long> userIds) ->
+                        CompletableFuture.supplyAsync(
+                                () -> postService.getAllPostsByUserId(userIds, userId),
+                                myExecutor)
+        );
     }
 }

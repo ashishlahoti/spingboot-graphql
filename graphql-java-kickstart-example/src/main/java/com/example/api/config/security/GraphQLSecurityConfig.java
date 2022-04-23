@@ -2,6 +2,8 @@ package com.example.api.config.security;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -9,16 +11,17 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.crypto.password.NoOpPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.preauth.AbstractPreAuthenticatedProcessingFilter;
 import org.springframework.security.web.authentication.preauth.PreAuthenticatedAuthenticationProvider;
 
 import javax.servlet.Filter;
 
 @Configuration
-//@EnableWebSecurity // Debug = true, will print the execution of the FilterChainProxy
-//@EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true)
-@EnableGlobalMethodSecurity(prePostEnabled = true)
+@EnableWebSecurity // Debug = true, will print the execution of the FilterChainProxy
+@EnableGlobalMethodSecurity(securedEnabled = true, prePostEnabled = true)
+//@EnableGlobalMethodSecurity(prePostEnabled = true)
 @RequiredArgsConstructor
 @Slf4j
 public class GraphQLSecurityConfig extends WebSecurityConfigurerAdapter {
@@ -41,28 +44,48 @@ public class GraphQLSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final PreAuthenticatedAuthenticationProvider preAuthenticatedAuthenticationProvider;
 
-    @Override
-    public void configure(AuthenticationManagerBuilder authenticationManagerBuilder) {
+    @Autowired
+    public void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.authenticationProvider(preAuthenticatedAuthenticationProvider);
+        auth.inMemoryAuthentication()
+                    .withUser("user")
+                    .password("user")
+                    .roles("MANAGER")
+                .and()
+                    .withUser("admin")
+                    .password("admin")
+                    .roles("ADMIN")
+                    ;
+    }
+
+    /*@Override
+    public void configure(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
         log.info("@@@@@@@@@@@@@@@@@@@ Configuring spring security configure(AuthenticationManagerBuilder) @@@@@@@@@@@@@@@@@@@@@@");
         authenticationManagerBuilder.authenticationProvider(preAuthenticatedAuthenticationProvider);
-    }
+    }*/
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         log.info("@@@@@@@@@@@@@@@@@@@ Configuring spring security configure(HttpSecurity http) @@@@@@@@@@@@@@@@@@@@@@");
 
         // Add the Pre Authentication Filter
-        http.addFilterBefore(createRequestHeadersPreAuthenticationFilter(), AbstractPreAuthenticatedProcessingFilter.class)
+        http
+                .addFilterBefore(createRequestHeadersPreAuthenticationFilter(), AbstractPreAuthenticatedProcessingFilter.class)
                 .authorizeRequests()
-                // All endpoints require authentication
-                .anyRequest().authenticated()
+                    .antMatchers("/graphql").hasAnyRole("MANAGER", "ADMIN")
+                    .antMatchers("/personaQL", "/vendor/personaQL/**").hasAnyRole("MANAGER", "ADMIN")
+                    // Permit graphiql
+                    .antMatchers("/graphiql/**", "/graphql**", "/subscriptions/**", "/vendor/**", "/graphiql-subscriptions-fetcher@0.0.2/**", "/subscriptions-transport-ws@0.8.3/**").hasAnyRole("USER", "ADMIN")
+                    // All endpoints require authentication
+                    .anyRequest()
+                    .authenticated()
                 .and()
-                // Disable CSRF Token generation
-                .csrf().disable()
-                // Disable the default HTTP Basic-Auth
-                .httpBasic().disable()
-                // Disable the session management filter
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                    // Disable CSRF Token generation
+                    .csrf().disable()
+                    // Disable the default HTTP Basic-Auth
+                    .httpBasic()//.disable()
+                    // Disable the session management filter
+                    //.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 // Disable the /logout filter
                 .logout().disable()
@@ -77,13 +100,14 @@ public class GraphQLSecurityConfig extends WebSecurityConfigurerAdapter {
                 // Actuator health endpoint for readiness, liveness checks etc
                 .antMatchers("/actuator/health")
                 // Permit playground for development
-                .antMatchers("/playground", "/vendor/playground/**")
+                //.antMatchers("/personaQL", "/vendor/personaQL/**")
                 // Permit graphiql
-                .antMatchers("/graphiql/**", "/graphql**", "/subscriptions/**" , "/vendor/**",
-                        "/graphiql-subscriptions-fetcher@0.0.2/**", "/subscriptions-transport-ws@0.8.3/**")
+                //.antMatchers("/graphql**")
+                //.antMatchers("/graphiql/**", "/subscriptions/**", "/vendor/**", "/graphiql-subscriptions-fetcher@0.0.2/**", "/subscriptions-transport-ws@0.8.3/**")
                 // Subscription are secured via AuthenticationConnectionListener
-                .antMatchers("/subscriptions");
-
+                .antMatchers("/subscriptions")
+                // Subscription are secured via AuthenticationConnectionListener
+                .antMatchers("/voyager");
     }
 
     private Filter createRequestHeadersPreAuthenticationFilter() throws Exception {
@@ -93,6 +117,11 @@ public class GraphQLSecurityConfig extends WebSecurityConfigurerAdapter {
         filter.setAuthenticationManager(authenticationManager());
         filter.setContinueFilterChainOnUnsuccessfulAuthentication(false);
         return filter;
+    }
+
+    @Bean
+    public PasswordEncoder getPasswordEncoder() {
+        return NoOpPasswordEncoder.getInstance();
     }
 
 }

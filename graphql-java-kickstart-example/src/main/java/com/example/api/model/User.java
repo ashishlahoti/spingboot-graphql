@@ -7,14 +7,14 @@ import lombok.Value;
  */
 @Value
 public class User {
-
     Long id;
-//    @GraphQLName("name")
-//    @GraphQLField
+    // @GraphQLName("name")
+    // @GraphQLField
     String name;
     String username;
     String email;
     String phone;
     String website;
     Address address;
+    Company company;
 }

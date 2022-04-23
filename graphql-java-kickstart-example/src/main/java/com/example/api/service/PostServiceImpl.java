@@ -76,4 +76,12 @@ public class PostServiceImpl implements PostService {
         users.forEach(user -> result.put(user, postFeignClient.getPostByUserId(user)));
         return result;
     }
+
+    @Override
+    public Map<Long, List<Post>> getAllPostsByUserId(Set<Long> users) {
+        log.info("getAllPostsByUserId - Requesting batch post of userIds: {} for user Id: {}", users);
+        Map<Long, List<Post>> result = new HashMap<>();
+        users.forEach(user -> result.put(user, postFeignClient.getPostByUserId(user)));
+        return result;
+    }
 }

@@ -22,7 +22,7 @@ public class CommentQueryResolver implements GraphQLQueryResolver {
         return commentService.getCommentById(commentId);
     }
 
-    List<Comment> getCommentByPostId(Long postId) {
+    List<Comment> getCommentsByPostId(Long postId) {
         return commentService.getAllCommentsByPostId(postId);
     }
 }

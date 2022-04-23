@@ -52,5 +52,4 @@ public class UserServiceImpl implements UserService {
         userFeignClient.deleteUser(id);
         return true;
     }
-
 }

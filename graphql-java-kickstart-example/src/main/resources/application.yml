@@ -6,8 +6,15 @@ spring:
   servlet:
     multipart:
       max-file-size: 1MB
+#  security:
+#    user:
+#      name: admin
+#      password: admin
+#      roles: manager
 
 graphql:
+  altair:
+    enabled: true
   servlet:
     max-query-depth: 20
     exception-handlers-enabled: true
@@ -17,20 +24,48 @@ graphql:
     enabled: true
     headers:
       Authorization: Bearer TOKEN # Possible options: Bearer TOKEN | Basic Token
-      user_id: IDP|ignachete7
-      user_roles: get:users
+      user_id: admin
+      user_roles: ADMIN
     tabs:
       - name: User
         query: classpath:playground/user.graphql
         variables: classpath:playground/user_variables.json
+        headers:
+          SomeHeader: Some value
+        responses:
+          - classpath:playground/responses/GET_USER_BY_ID.json
       - name: Post
         query: classpath:playground/post.graphql
         variables: classpath:playground/post_variables.json
         headers:
           Accept: application/json
+          Other-Header: Other Value
       - name: Comment
         query: classpath:playground/comment.graphql
         variables: classpath:playground/comment_variables.json
+        responses:
+          - classpath:playground/responses/allCommentsResponse.json
+          - classpath:playground/responses/commentByIdResponse.json
+    page-title: Nacho's Playground
+    endpoint: /graphql
+    mapping: /personaQL
+    settings:
+      editor.cursorShape: line # possible values: 'line', 'block', 'underline'
+      editor.fontFamily: "'Source Code Pro', 'Consolas', 'Inconsolata', 'Droid Sans Mono', 'Monaco', monospace"
+      editor.fontSize: 14
+      editor.reuseHeaders: true # new tab reuses headers from last tab
+#      editor.theme: light  # possible values: 'dark', 'light'
+      general.betaUpdates: false
+      prettier.printWidth: 80
+      prettier.tabWidth: 4
+      prettier.useTabs: true
+      request.credentials: include # possible values: 'omit', 'include', 'same-origin' includes the credentials headers in the requests
+      schema.polling.enable: false # schema.polling.enable: true
+      schema.polling.endpointFilter: "*localhost*" # o specify a regex pattern to restrict which url to poll. Default: *localhost*
+      schema.polling.interval: 60000  # schema polling interval in ms
+      schema.disableComments: false
+      tracing.hideTracingResponse: false
+
 
 voyager:
   enabled: true

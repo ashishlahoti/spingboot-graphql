@@ -1,0 +1,10 @@
+//GET_USER_BY_ID
+{
+  "data": {
+    "userById": {
+      "id": "1",
+      "name": "Leanne Graham",
+      "username": "Bret"
+    }
+  }
+}

@@ -1,8 +1,25 @@
+# Comment Description: harum non quasi et ratione
+#tempore iure ex voluptates in ratione
+#harum architecto fugit inventore cupiditate
+#voluptates magni quo et
 type Comment {
     id: ID!,
     postId: String,
     name: String,
     email: String,
     body: String,
-    post: Post
+    fixedValue: String,
+    otherFixedValue: String,
+    post: Post,
+    commenter: Commenter
+}
+
+# Commenter Description: harum non quasi et ratione
+#tempore iure ex voluptates in ratione
+#harum architecto fugit inventore cupiditate
+#voluptates magni quo et
+type Commenter {
+    id: ID!,
+    name: String,
+    email: String
 }

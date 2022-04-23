@@ -7,6 +7,7 @@ import org.springframework.core.task.TaskDecorator;
 import org.springframework.stereotype.Component;
 
 import static com.example.api.graphql.instrumentation.RequestLoggingInstrumentation.CORRELATION_ID;
+import static com.example.api.graphql.instrumentation.RequestLoggingInstrumentation.SECURITY_CONTEXT;
 
 /**
  * A decorator to be applied to any Runnable about to be executed.
@@ -23,6 +24,8 @@ public class MdcContextTaskDecorator implements AsyncTaskDecorator, TaskDecorato
         // Lo usabamos al poner ahora el correlation ID en el CustomGraphQLContextBuilder
         var mdcContext = MDC.getCopyOfContextMap();
         log.info("mdcContext: {}", mdcContext);
+        log.info("MDC CORRELATION_ID: {}", MDC.get(CORRELATION_ID));
+        log.info("MDC SECURITY_CONTEXT: {}", MDC.get(SECURITY_CONTEXT));
         // Lo usabamos cuando poniamos el correlation ID en el RequestLoggingInstrumentation
         // var correlationId = MDC.get(CORRELATION_ID);
         return () -> {
