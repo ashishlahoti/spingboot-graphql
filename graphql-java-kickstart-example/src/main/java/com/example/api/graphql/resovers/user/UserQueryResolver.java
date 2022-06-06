@@ -1,11 +1,16 @@
 package com.example.api.graphql.resovers.user;
 
-import com.example.api.graphql.context.CustomGraphQLContext;
-import com.example.api.model.Post;
 import com.example.api.model.User;
 import com.example.api.service.UserService;
 import graphql.kickstart.tools.GraphQLQueryResolver;
-import graphql.relay.*;
+import graphql.relay.Connection;
+import graphql.relay.ConnectionCursor;
+import graphql.relay.DefaultConnection;
+import graphql.relay.DefaultConnectionCursor;
+import graphql.relay.DefaultEdge;
+import graphql.relay.DefaultPageInfo;
+import graphql.relay.Edge;
+import graphql.relay.PageInfo;
 import graphql.schema.DataFetchingEnvironment;
 import graphql.schema.SelectedField;
 import lombok.RequiredArgsConstructor;
@@ -40,10 +45,7 @@ public class UserQueryResolver implements GraphQLQueryResolver {
     //    }
 
     public CompletableFuture<List<User>> getUsers() {
-        return CompletableFuture.supplyAsync(
-                () -> {
-                    return userService.getAllUsers();
-                }, myExecutor);
+        return CompletableFuture.supplyAsync(userService::getAllUsers, myExecutor);
     }
 
     // @PreAuthorize("hasAuthority('get:users')")
@@ -80,14 +82,7 @@ public class UserQueryResolver implements GraphQLQueryResolver {
     //@PreAuthorize("hasAuthority('get:users')")
     public User getUserById(Long userId, DataFetchingEnvironment env) {
         // Selection fields set requested
-        log.info("getUserById >>>>>> Selection set:");
-        env.getSelectionSet().getFields().stream().map(SelectedField::getName).distinct().forEach(log::info);
-        // Request variables
-        log.info("getUserById >>>>> Variables:");
-        env.getVariables().entrySet().stream().map(Object::toString).forEach(log::info);
-        // Request arguments, filter arguments
-        log.info("getUserById >>>>> Arguments:");
-        env.getArguments().entrySet().stream().map(Object::toString).forEach(log::info);
+        printEnvironment("getUserById >>>>>> Selection set:", env, "getUserById >>>>> Variables:", "getUserById >>>>> Arguments:");
 
         //        CustomGraphQLContext context = env.getContext();
         //        log.info("getUserById User Id: {}", context.getUserId()); // Este campo lo hemos definido en nuestro Custom Context
@@ -97,24 +92,27 @@ public class UserQueryResolver implements GraphQLQueryResolver {
 
     /**
      * @param userIds
-     * @param env    A DataFetchingEnvironment instance of passed to a DataFetcher as a execution context and its the place
-     *               where you can find out information to help you resolve a data value given a graphql field input
+     * @param env     A DataFetchingEnvironment instance of passed to a DataFetcher as a execution context and its the place
+     *                where you can find out information to help you resolve a data value given a graphql field input
      * @return User
      */
     //@PreAuthorize("hasAuthority('get:users')")
-    public  List<User> getUsersByIds(List<Long> userIds, DataFetchingEnvironment env) {
+    public List<User> getUsersByIds(List<Long> userIds, DataFetchingEnvironment env) {
         log.info("getUsersByIds >>>>>> userIds: {}", userIds);
         // Selection fields set requested
-        log.info("getUsersByIds >>>>>> Selection set:");
-        env.getSelectionSet().getFields().stream().map(SelectedField::getName).distinct().forEach(log::info);
-        // Request variables
-        log.info("getUsersByIds >>>>> Variables:");
-        env.getVariables().entrySet().stream().map(Object::toString).forEach(log::info);
-        // Request arguments, filter arguments
-        log.info("getUsersByIds >>>>> Arguments:");
-        env.getArguments().entrySet().stream().map(Object::toString).forEach(log::info);
-
+        printEnvironment("getUsersByIds >>>>>> Selection set:", env, "getUsersByIds >>>>> Variables:", "getUsersByIds >>>>> Arguments:");
 
         return userService.getAllUsers().stream().filter(user -> userIds.contains(user.getId())).toList();
+    }
+
+    private void printEnvironment(String msg, DataFetchingEnvironment env, String msg1, String msg2) {
+        log.info(msg);
+        env.getSelectionSet().getFields().stream().map(SelectedField::getName).distinct().forEach(log::info);
+        // Request variables
+        log.info(msg1);
+        env.getVariables().entrySet().stream().map(Object::toString).forEach(log::info);
+        // Request arguments, filter arguments
+        log.info(msg2);
+        env.getArguments().entrySet().stream().map(Object::toString).forEach(log::info);
     }
 }

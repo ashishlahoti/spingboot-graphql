@@ -1,11 +1,11 @@
 query GET_ALL_COMMENTS {
-  comments {
-    id
-    name
-    email
-    body
-    postId
-  }
+    comments {
+        id
+        name
+        email
+        body
+        postId
+    }
 }
 
 query GET_COMMENT_BY_ID($commentId: ID) {
@@ -16,16 +16,27 @@ query GET_COMMENT_BY_ID($commentId: ID) {
             id
             name
             email
-            id
+            publish
             __typename
         }
     }
 }
 
 query GET_COMMENTS_BY_POST_ID($postId: ID) {
-  commentsByPostId(postId: $postId) {
-    name
-    email
-    body
-  }
+    commentsByPostId(postId: $postId) {
+        name
+        email
+        body
+    }
+}
+
+mutation UPDATE_COMMENTER ($commenterInput: CommenterInput) {
+    updateCommenter(input: $commenterInput) {
+        commenter {
+            id
+            name
+            email
+            publish
+        }
+    }
 }

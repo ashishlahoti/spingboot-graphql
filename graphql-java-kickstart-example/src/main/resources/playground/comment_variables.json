@@ -1,4 +1,10 @@
 {
-  "commentId": 5,
-  "postId": 2
+  "commentId": 1,
+  "postId": 2,
+  "commenterInput": {
+    "commentId": 1,
+    "name": "Nacho de los Palotes",
+    "email": "demo@klarna.com",
+    "dateOfBirth": "2000-01-01"
+  }
 }

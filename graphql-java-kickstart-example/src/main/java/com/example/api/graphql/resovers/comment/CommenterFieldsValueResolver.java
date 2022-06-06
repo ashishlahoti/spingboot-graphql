@@ -1,5 +1,6 @@
 package com.example.api.graphql.resovers.comment;
 
+import com.example.api.model.Comment;
 import com.example.api.model.Commenter;
 import graphql.kickstart.tools.GraphQLResolver;
 import graphql.schema.DataFetchingEnvironment;
@@ -11,74 +12,43 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
-import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.Executor;
-
 @Component
 @RequiredArgsConstructor
 @Slf4j
 public class CommenterFieldsValueResolver implements GraphQLResolver<Commenter> {
-    private final Executor myExecutor;
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public CompletableFuture<Long> getId(Commenter commenter, DataFetchingEnvironment dataFetchingEnvironment) {
-
-        printAuthentication();
-
-        if (commenter != null) {
-            log.info("IF Getting commenter Id: {},", commenter.getId());
-            return CompletableFuture.completedFuture(commenter.getId());
-        }
-
-        // Dataloader call NO NEEDED because the parent resolver call the dataLoader. **** REMOVE
-        return CompletableFuture.supplyAsync(
-                () -> {
-                    log.info("ELSE Getting commenter id @@@@@@");
-                    return 1L;
-                }, myExecutor);
+    @PreAuthorize("hasAnyRole('ROLE_MANAGER', 'ROLE_ADMIN', 'ROLE_USER')")
+    public Long getId(Commenter commenter) {
+        log.info("Getting commenter Id: {},", commenter.getId());
+        return commenter.getId();
     }
 
-
-
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public CompletableFuture<String> getName(Commenter commenter, DataFetchingEnvironment dataFetchingEnvironment) {
-        printAuthentication();
-
-        if (commenter != null) {
-            log.info("IF Getting commenter Name: {},", commenter.getName());
-            return CompletableFuture.completedFuture(commenter.getName());
-        }
-
-        // Dataloader call NO NEEDED because the parent resolver call the dataLoader. **** REMOVE
-        return CompletableFuture.supplyAsync(
-                () -> {
-                    log.info("ELSE Getting commenter Name @@@@@@");
-                    return "Nacho Martin";
-                }, myExecutor);
+    @PreAuthorize("hasAnyRole('ROLE_MANAGER', 'ROLE_ADMIN', 'ROLE_USER')")
+    public String getName(Commenter commenter) {
+        log.info("Getting commenter Name: {},", commenter.getName());
+        return commenter.getName();
     }
 
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public CompletableFuture<String> getEmail(Commenter commenter, DataFetchingEnvironment dataFetchingEnvironment) {
-
-        printAuthentication();
-
-        if (commenter != null) {
-            log.info("IF Getting commenter Email: {},", commenter.getEmail());
-            return CompletableFuture.completedFuture(commenter.getEmail());
-        }
-
-        // Dataloader call NO NEEDED because the parent resolver call the dataLoader. **** REMOVE
-        return CompletableFuture.supplyAsync(
-                () -> {
-                    log.info("ELSE Getting commenter Email @@@@@@");
-                    return "jose-ignacio.martin@klarna.com";
-                }, myExecutor);
+    @PreAuthorize("hasAnyRole('ROLE_MANAGER', 'ROLE_ADMIN', 'ROLE_USER')")
+    public String getEmail(Commenter commenter) {
+        log.info("Getting commenter Email: {},", commenter.getEmail());
+        return commenter.getEmail();
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    public boolean isPublish(Commenter commenter, DataFetchingEnvironment env) {
+        //printAuthentication(env);
+        log.info("Getting commenter publish: {},", commenter.isPublish());
+        return commenter.isPublish();
+    }
 
-    private void printAuthentication() {
+    private void printAuthentication(DataFetchingEnvironment env) {
         SecurityContext context = SecurityContextHolder.getContext();
         Authentication authentication = context.getAuthentication();
         log.info("authentication: {},", authentication);
+        log.info("Source: {},", (Object) env.getSource());
+        log.info("Root: {},", env.getRoot().getClass());
+        log.info("FieldDefinition: {},", env.getFieldDefinition());
+        log.info("Selections: {},", env.getOperationDefinition().getSelectionSet().getSelections());
     }
 }

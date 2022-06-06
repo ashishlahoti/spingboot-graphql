@@ -13,19 +13,69 @@ spring:
 #      roles: manager
 
 graphql:
-  altair:
-    enabled: true
+#  altair:
+#    enabled: true
+#    mapping: /altair
+#    subscriptions:
+#      timeout: 30
+#      reconnect: false
+#    static:
+#      base-path: /
+#    page-title: Altair
+#    cdn:
+#      enabled: false
+#      version: 4.0.2
+#    options:
+#      endpoint-url: /graphql
+#      subscriptions-endpoint: /subscriptions
+#      initial-settings:
+#        theme: dracula
+#      initial-headers:
+#        Authorization: "Bearer <your-token>"
+#    resources:
+#      initial-query: defaultQuery.graphql
+#      initial-variables: variables.graphql
+#      initial-pre-request-script: pre-request.graphql
+#      initial-post-request-script: post-request.graphql
   servlet:
     max-query-depth: 20
-    exception-handlers-enabled: true
+    # Enable exception handlers
+    exception-handlers-enabled: false
+
     tracing-enabled: false # Habilita/Deshabilita las trazas de graphQL
+  # Defined extended scalars
   extended-scalars: BigDecimal, Date, Url
+
+  altair:
+    enabled: true
+    mapping: /altair
+    subscriptions:
+      timeout: 30
+      reconnect: false
+    static:
+      base-path: /
+    page-title: Altair
+    cdn:
+      enabled: false
+      version: 4.0.2
+    options:
+      endpoint-url: /graphql
+      subscriptions-endpoint: /subscriptions
+      initial-settings:
+        theme: dracula
+      initial-headers:
+        Authorization: "Bearer <your-token>"
+    resources:
+      initial-query: classpath:playground/queries.graphql
+      initial-variables: classpath:playground/queries_variables.json
+
+
   playground:
     enabled: true
-    headers:
-      Authorization: Bearer TOKEN # Possible options: Bearer TOKEN | Basic Token
-      user_id: admin
-      user_roles: ADMIN
+    #    headers:
+    #      Authorization: Bearer TOKEN # Possible options: Bearer TOKEN | Basic Token
+    #      user_id: admin
+    #      user_roles: ADMIN
     tabs:
       - name: User
         query: classpath:playground/user.graphql
@@ -50,22 +100,21 @@ graphql:
     endpoint: /graphql
     mapping: /personaQL
     settings:
-      editor.cursorShape: line # possible values: 'line', 'block', 'underline'
-      editor.fontFamily: "'Source Code Pro', 'Consolas', 'Inconsolata', 'Droid Sans Mono', 'Monaco', monospace"
-      editor.fontSize: 14
+#      editor.cursorShape: line # possible values: 'line', 'block', 'underline'
+#      editor.fontFamily: "'Source Code Pro', 'Consolas', 'Inconsolata', 'Droid Sans Mono', 'Monaco', monospace"
+#      editor.fontSize: 14
       editor.reuseHeaders: true # new tab reuses headers from last tab
 #      editor.theme: light  # possible values: 'dark', 'light'
-      general.betaUpdates: false
-      prettier.printWidth: 80
-      prettier.tabWidth: 4
-      prettier.useTabs: true
+#      general.betaUpdates: false
+#      prettier.printWidth: 80
+#      prettier.tabWidth: 4
+#      prettier.useTabs: true
       request.credentials: include # possible values: 'omit', 'include', 'same-origin' includes the credentials headers in the requests
-      schema.polling.enable: false # schema.polling.enable: true
-      schema.polling.endpointFilter: "*localhost*" # o specify a regex pattern to restrict which url to poll. Default: *localhost*
-      schema.polling.interval: 60000  # schema polling interval in ms
-      schema.disableComments: false
-      tracing.hideTracingResponse: false
-
+#      schema.polling.enable: false # schema.polling.enable: true
+#      schema.polling.endpointFilter: "*localhost*" # o specify a regex pattern to restrict which url to poll. Default: *localhost*
+#      schema.polling.interval: 60000  # schema polling interval in ms
+#      schema.disableComments: false
+#      tracing.hideTracingResponse: false
 
 voyager:
   enabled: true
@@ -82,4 +131,3 @@ feign:
     config:
       default:
         loggerLevel: BASIC #Possible options: BASIC, FULL, HEADERS, NONE
-

@@ -1,7 +1,4 @@
 # Comment Description: harum non quasi et ratione
-#tempore iure ex voluptates in ratione
-#harum architecto fugit inventore cupiditate
-#voluptates magni quo et
 type Comment {
     id: ID!,
     postId: String,
@@ -15,11 +12,23 @@ type Comment {
 }
 
 # Commenter Description: harum non quasi et ratione
-#tempore iure ex voluptates in ratione
-#harum architecto fugit inventore cupiditate
-#voluptates magni quo et
 type Commenter {
     id: ID!,
     name: String,
-    email: String
+    email: String,
+    publish: Boolean
+}
+
+
+# Commenter Description: harum non quasi et ratione
+input CommenterInput {
+    commentId: ID!,
+    name: String!,
+    email: String!,
+    """
+    ***Description***: The verified date of birth.
+    ***Format***: YYYY-MM-DD
+    ***Required***: Yes
+    """
+    dateOfBirth: Date!
 }

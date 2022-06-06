@@ -43,11 +43,15 @@ dependencies {
     implementation ('com.graphql-java:graphql-java-extended-scalars:17.0') {
         exclude group: 'com.graphql-java', module: 'graphql-java'
     }
+    implementation 'org.projectlombok:lombok:1.18.22'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'com.graphql-java-kickstart:graphql-spring-boot-starter-test:12.0.0'
 
     // to embed GraphQL Playground tool at hostname:port/playground
     // runtimeOnly 'com.graphql-java-kickstart:playground-spring-boot-starter:11.1.0'
+
+    // to embed GraphQL altair tool at hostname:port/altair
+    //implementation 'com.graphql-java-kickstart:altair-spring-boot-starter:11.1.0'
 
     // to embed Voyager tool at hostname:post/voyager
     runtimeOnly 'com.graphql-java-kickstart:voyager-spring-boot-starter:11.1.0'
@@ -58,6 +62,11 @@ dependencies {
     // Lombok and commons for boilerplate code
     compileOnly 'org.projectlombok:lombok:1.18.22'
     annotationProcessor 'org.projectlombok:lombok:1.18.22'
+    testAnnotationProcessor "org.projectlombok:lombok:1.18.22"
+
+    implementation 'com.graphql-java-kickstart:altair-spring-boot-starter:11.1.0'
+    // to embed Altair tool
+    // runtimeOnly 'com.graphql-java-kickstart:altair-spring-boot-starter:12.0.0'
 }
 
 dependencyManagement {

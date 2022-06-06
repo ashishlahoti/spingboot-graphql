@@ -7,15 +7,17 @@ import graphql.schema.DataFetchingEnvironment;
 import graphql.schema.SelectedField;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.access.annotation.Secured;
+import org.dataloader.DataLoader;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.Executor;
+
+import static com.example.api.graphql.context.dataloader.DataLoaderRegistryFactory.COMMENTER_DATA_LOADER;
 
 /**
  * When given a BookResolver instance, GraphQL Java Tools first attempts to map fields to methods on the resolver before mapping them
@@ -28,35 +30,37 @@ import java.util.concurrent.Executor;
 @RequiredArgsConstructor
 @Slf4j
 public class CommenterValueResolver implements GraphQLResolver<Comment> {
-    private final Executor myExecutor;
 
     /**
      * @param comment data class instance is passed as the first argument to the resolver function
      * @return
      */
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
-    public CompletableFuture<Commenter> getCommenter(Comment comment, DataFetchingEnvironment dataFetchingEnvironment) {
-        SecurityContext context = SecurityContextHolder.getContext();
-        Authentication authentication = context.getAuthentication();
+    @PreAuthorize("hasAnyRole('ROLE_MANAGER', 'ROLE_ADMIN', 'ROLE_USER')")
+    public CompletableFuture<Commenter> getCommenter(Comment comment, DataFetchingEnvironment env) {
+        //printAuthenticationAndEnv(env);
+        Optional<Commenter> commentOptional = Optional.ofNullable(comment.getCommenter());
 
-        log.info("authentication: {},", authentication);
-        log.info("Variables: {},", dataFetchingEnvironment.getVariables().keySet());
-        log.info("Arguments: {},", dataFetchingEnvironment.getArguments().keySet());
-        // log.info("Document: {},", dataFetchingEnvironment.getDocument());
-        log.info("SelectionSet: {},", dataFetchingEnvironment.getSelectionSet().getFields().stream().map(SelectedField::getName).toList());
-
-        if(comment.getCommenter() != null) {
-            log.info("IF Getting commenter: {},", comment.getCommenter());
+        if (commentOptional.isPresent()) {
+            log.info("IF Getting commenter FROM PARENT COMMENT: {},", comment.getCommenter());
             return CompletableFuture.completedFuture(comment.getCommenter());
         }
 
         // WILL CALL the Dataloader
-        return CompletableFuture.supplyAsync(
-                () -> {
-                    log.info("ELSE CALL the Dataloader to fetch the commenter for comment id {}", comment.getId());
-                    Commenter nacho_martin = new Commenter(1L, "Nacho Martin", "jose-ignacio.martin@klarna.com");
-                    log.info("ELSE Commenter fetched from the data loader {}", nacho_martin);
-                    return nacho_martin;
-                }, myExecutor);
+        log.info("ELSE CALL the Dataloader to fetch the commenter for comment id {}", comment.getId());
+        DataLoader<Long, Commenter> dataLoader = env.getDataLoader(COMMENTER_DATA_LOADER);
+        return dataLoader.load(comment.getId(), comment);
+    }
+
+    private void printAuthenticationAndEnv(DataFetchingEnvironment env) {
+        SecurityContext context = SecurityContextHolder.getContext();
+        Authentication authentication = context.getAuthentication();
+        log.info("authentication: {},", authentication);
+        log.info("Variables: {},", env.getVariables().keySet());
+        log.info("Arguments: {},", env.getArguments().keySet());
+        // log.info("Document: {},", dataFetchingEnvironment.getDocument());
+        log.info("SelectionSet: {},", env.getSelectionSet().getFields().stream().map(SelectedField::getName).toList());
+        // log.info("Source: {},", (Object) env.getSource());
+        // log.info("Root: {},", (Object) env.getRoot());
+        // log.info("FieldDefinition: {},", env.getFieldDefinition());
     }
 }

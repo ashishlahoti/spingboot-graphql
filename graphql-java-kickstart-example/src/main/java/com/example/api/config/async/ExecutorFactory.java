@@ -24,6 +24,10 @@ public final class ExecutorFactory {
         executor.setKeepAliveSeconds(0);
         executor.setTaskDecorator(mdcContextTaskDecorator); // Specify a custom TaskDecorator to be applied to any Runnable about to be executed.
         executor.initialize();
+        /**
+         * An AsyncTaskExecutor which wraps each Runnable in a DelegatingSecurityContextRunnable and each Callable in a DelegatingSecurityContextCallable.
+         * Necesaria para que pase las credenciales de seguridad del usuario autenticado en procesos asincronos
+         */
         return new DelegatingSecurityContextAsyncTaskExecutor(executor);
     }
 }

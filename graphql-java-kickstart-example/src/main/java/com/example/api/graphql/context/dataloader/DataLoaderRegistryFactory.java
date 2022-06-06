@@ -23,8 +23,9 @@ public class DataLoaderRegistryFactory {
 
     public static final String POST_DATA_LOADER = "POST_DATA_LOADER";
     public static final String POST_DATA_LOADER_2 = "POST_DATA_LOADER_2";
-
+    public static final String COMMENTER_DATA_LOADER = "COMMENTER_DATA_LOADER";
     private final PostDataLoader postDataLoader;
+    private final CommenterDataLoader commenterDataLoader;
     private final PostService postService;
     private final Executor myExecutor;
 
@@ -32,6 +33,7 @@ public class DataLoaderRegistryFactory {
         DataLoaderRegistry registry = new DataLoaderRegistry();
         registry.register(POST_DATA_LOADER, createPostDataLoader(userId));
         registry.register(POST_DATA_LOADER_2, DataLoaderFactory.newMappedDataLoader(postDataLoader));
+        registry.register(COMMENTER_DATA_LOADER, DataLoaderFactory.newMappedDataLoader(commenterDataLoader));
         return registry;
     }
 

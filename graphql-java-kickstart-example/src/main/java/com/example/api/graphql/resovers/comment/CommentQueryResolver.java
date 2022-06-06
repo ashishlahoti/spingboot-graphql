@@ -11,7 +11,6 @@ import java.util.List;
 @Component
 @RequiredArgsConstructor
 public class CommentQueryResolver implements GraphQLQueryResolver {
-
     private final CommentService commentService;
 
     List<Comment> getComments() {

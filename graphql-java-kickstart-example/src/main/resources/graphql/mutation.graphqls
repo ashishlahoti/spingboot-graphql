@@ -11,4 +11,6 @@ type Mutation {
     createPost(input: PostInput): Post
     # Upload File, No input type supplied. return the ID of the uploaded file
     uploadFile: ID!
+    # Update Commenter od the comment
+    updateCommenter(input: CommenterInput): Comment
 }

@@ -1,11 +1,11 @@
 package com.example.api.model;
 
-import lombok.Value;
+import lombok.Data;
 
 /**
  * Comment Data class
  */
-@Value
+@Data
 public class Comment {
     Long postId;
     Long id;

@@ -48,21 +48,18 @@ public class GraphQLSecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.authenticationProvider(preAuthenticatedAuthenticationProvider);
         auth.inMemoryAuthentication()
-                    .withUser("user")
-                    .password("user")
-                    .roles("MANAGER")
+                .withUser("user")
+                .password("user")
+                .roles("USER")
                 .and()
-                    .withUser("admin")
-                    .password("admin")
-                    .roles("ADMIN")
-                    ;
+                .withUser("manager")
+                .password("manager")
+                .roles("MANAGER")
+                .and()
+                .withUser("admin")
+                .password("admin")
+                .roles("ADMIN");
     }
-
-    /*@Override
-    public void configure(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
-        log.info("@@@@@@@@@@@@@@@@@@@ Configuring spring security configure(AuthenticationManagerBuilder) @@@@@@@@@@@@@@@@@@@@@@");
-        authenticationManagerBuilder.authenticationProvider(preAuthenticatedAuthenticationProvider);
-    }*/
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -72,20 +69,25 @@ public class GraphQLSecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .addFilterBefore(createRequestHeadersPreAuthenticationFilter(), AbstractPreAuthenticatedProcessingFilter.class)
                 .authorizeRequests()
-                    .antMatchers("/graphql").hasAnyRole("MANAGER", "ADMIN")
-                    .antMatchers("/personaQL", "/vendor/personaQL/**").hasAnyRole("MANAGER", "ADMIN")
-                    // Permit graphiql
-                    .antMatchers("/graphiql/**", "/graphql**", "/subscriptions/**", "/vendor/**", "/graphiql-subscriptions-fetcher@0.0.2/**", "/subscriptions-transport-ws@0.8.3/**").hasAnyRole("USER", "ADMIN")
-                    // All endpoints require authentication
-                    .anyRequest()
-                    .authenticated()
+                .antMatchers("/graphql")
+                .hasAnyRole("USER", "MANAGER", "ADMIN")
+                // Permit playground
+                .antMatchers("/personaQL", "/vendor/personaQL/**")
+                .hasAnyRole("USER", "MANAGER", "ADMIN")
+                // Permit graphiql
+                .antMatchers("/graphiql/**", "/graphql**", "/subscriptions/**", "/vendor/**", "/graphiql-subscriptions-fetcher@0.0.2/**", "/subscriptions-transport-ws@0.8.3/**")
+                .hasAnyRole("USER", "MANAGER", "ADMIN")
+                .antMatchers("/altair/**")
+                .hasAnyRole("USER", "MANAGER", "ADMIN")
+                // All endpoints require authentication
+                .anyRequest().authenticated()
                 .and()
-                    // Disable CSRF Token generation
-                    .csrf().disable()
-                    // Disable the default HTTP Basic-Auth
-                    .httpBasic()//.disable()
-                    // Disable the session management filter
-                    //.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                // Disable CSRF Token generation
+                .csrf().disable()
+                // Disable the default HTTP Basic-Auth
+                .httpBasic()//.disable()
+                // Disable the session management filter
+                //.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 // Disable the /logout filter
                 .logout().disable()
@@ -103,6 +105,7 @@ public class GraphQLSecurityConfig extends WebSecurityConfigurerAdapter {
                 //.antMatchers("/personaQL", "/vendor/personaQL/**")
                 // Permit graphiql
                 //.antMatchers("/graphql**")
+                // Permit graphiql, subscriptions, etc
                 //.antMatchers("/graphiql/**", "/subscriptions/**", "/vendor/**", "/graphiql-subscriptions-fetcher@0.0.2/**", "/subscriptions-transport-ws@0.8.3/**")
                 // Subscription are secured via AuthenticationConnectionListener
                 .antMatchers("/subscriptions")

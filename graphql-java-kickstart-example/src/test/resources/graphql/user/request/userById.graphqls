@@ -1,0 +1,7 @@
+query GET_USER_BY_ID($userId: ID) {
+    userById(id: $userId) {
+        id
+        name
+        username
+    }
+}
