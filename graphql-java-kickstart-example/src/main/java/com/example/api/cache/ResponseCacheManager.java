@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 import javax.servlet.http.HttpServletRequest;
 
 @Slf4j
-@Component
+//  @Component
 @RequiredArgsConstructor
 public class ResponseCacheManager implements GraphQLResponseCacheManager {
 

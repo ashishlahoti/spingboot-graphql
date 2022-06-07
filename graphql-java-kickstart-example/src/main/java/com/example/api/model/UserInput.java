@@ -13,9 +13,7 @@ public class UserInput {
     String name;
     @NotBlank
     String username;
-    @NotBlank
     String email;
-    @NotBlank
     String phone;
     String website;
 }

@@ -64,7 +64,7 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok:1.18.22'
     testAnnotationProcessor "org.projectlombok:lombok:1.18.22"
 
-    implementation 'com.graphql-java-kickstart:altair-spring-boot-starter:11.1.0'
+    // implementation 'com.graphql-java-kickstart:altair-spring-boot-starter:11.1.0'
     // to embed Altair tool
     // runtimeOnly 'com.graphql-java-kickstart:altair-spring-boot-starter:12.0.0'
 }

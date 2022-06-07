@@ -2,15 +2,15 @@
 type Mutation {
     # nombre_metodo(lista de argumentos: Tipo): Tipo de retorno
     # Create User
-    createUser(input: UserInput): User,
+    createUser(input: UserInput): User @auth(role : "ROLE_ADMIN") @validateUserInput
     # Update User
-    updateUser(id:ID, input: UserInput): User,
+    updateUser(id:ID, input: UserInput): User @auth(role : "ROLE_ADMIN")
     # Delete User
-    deleteUser(id:ID): Boolean,
+    deleteUser(id:ID): Boolean @auth(role : "ROLE_ADMIN")
     # create Post
-    createPost(input: PostInput): Post
+    createPost(input: PostInput): Post @auth(role : "ROLE_ADMIN")
     # Upload File, No input type supplied. return the ID of the uploaded file
-    uploadFile: ID!
+    uploadFile: ID! @auth(role : "ROLE_ADMIN")
     # Update Commenter od the comment
-    updateCommenter(input: CommenterInput): Comment
+    updateCommenter(input: CommenterInput): Comment @auth(role : "ROLE_ADMIN")
 }

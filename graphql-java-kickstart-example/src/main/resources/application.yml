@@ -46,30 +46,6 @@ graphql:
   # Defined extended scalars
   extended-scalars: BigDecimal, Date, Url
 
-  altair:
-    enabled: true
-    mapping: /altair
-    subscriptions:
-      timeout: 30
-      reconnect: false
-    static:
-      base-path: /
-    page-title: Altair
-    cdn:
-      enabled: false
-      version: 4.0.2
-    options:
-      endpoint-url: /graphql
-      subscriptions-endpoint: /subscriptions
-      initial-settings:
-        theme: dracula
-      initial-headers:
-        Authorization: "Bearer <your-token>"
-    resources:
-      initial-query: classpath:playground/queries.graphql
-      initial-variables: classpath:playground/queries_variables.json
-
-
   playground:
     enabled: true
     #    headers:

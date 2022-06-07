@@ -1,18 +1,22 @@
 # Query for read operations
+directive @uppercase on ARGUMENT_DEFINITION | INPUT_FIELD_DEFINITION | FIELD_DEFINITION
+directive @auth(role : String!) on FIELD_DEFINITION | INPUT_FIELD_DEFINITION | FIELD_DEFINITION | MUTATION | QUERY
+directive @validateUserInput on INPUT_OBJECT
+
 # All Available Queries
 type Query {
     # Get All Users
-    users: [User],
+    users: [User] @auth(role : "ROLE_ADMIN"),
     # Get All Users Paginated ()
     usersPaginated(number: Int!, after: String): UserConnection @connection (for: "User"),
     # Get User by userId
-    userById(id:ID): User,
+    userById(id:ID): User
     # Get User by userIds
-    usersByIds(ids:[ID]): [User],
+    usersByIds(ids:[ID]): [User]
     # Get All Posts
-    posts: [Post],
+    posts: [Post]
     # Get Post by postId
-    postById(id:ID): Post,
+    postById(id:ID): Post
     # Get All Posts by userId
     postByUserId(userId:ID): [Post]
     # Get All Comments

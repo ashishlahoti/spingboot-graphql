@@ -4,10 +4,10 @@
 #voluptates magni quo et
 type User {
     id: ID!
-    name: String
-    username: String
-    email: String
-    phone: String
+    name: String @uppercase
+    username: String @auth(role : "ROLE_ADMIN")
+    email: String @auth(role : "ROLE_ADMIN")
+    phone: String @auth(role : "ROLE_ADMIN")
     website: String
     # website: Url
     posts: [Post]
