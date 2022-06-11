@@ -1,4 +1,4 @@
-package com.example.api.config.graphQL;
+package com.example.api.config.graphQL.directives;
 
 import graphql.language.StringValue;
 import graphql.schema.DataFetcher;
@@ -7,6 +7,7 @@ import graphql.schema.GraphQLFieldsContainer;
 import graphql.schema.idl.SchemaDirectiveWiring;
 import graphql.schema.idl.SchemaDirectiveWiringEnvironment;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
@@ -21,6 +22,7 @@ public class AuthorisationDirective implements SchemaDirectiveWiring {
 
     @Override
     public GraphQLFieldDefinition onField(SchemaDirectiveWiringEnvironment<GraphQLFieldDefinition> environment) {
+
         String targetAuthRole = ((StringValue) Objects.requireNonNull(environment.getDirective().getArgument("role")
                 .getArgumentValue().getValue())).getValue();
 
@@ -31,12 +33,11 @@ public class AuthorisationDirective implements SchemaDirectiveWiring {
 
         // build a data fetcher that first checks authorisation roles before then calling the original data fetcher
         DataFetcher<?> originalDataFetcher = environment.getCodeRegistry().getDataFetcher(parentType, field);
-
-        DataFetcher<?> authDataFetcher = dataFetchingEnvironment -> {
+        DataFetcher<?> authDataFetcher = dfe -> {
             if (hasRole(targetAuthRole)) {
-                return originalDataFetcher.get(dataFetchingEnvironment);
+                return originalDataFetcher.get(dfe);
             } else {
-                throw new IllegalAccessException("No access permission");
+                throw new AccessDeniedException("No access permission");
             }
         };
 
@@ -46,11 +47,12 @@ public class AuthorisationDirective implements SchemaDirectiveWiring {
     }
 
     private boolean hasRole(String targetAuthRole) {
-        SecurityContext securityContext = SecurityContextHolder.getContext();
-        Authentication authentication = securityContext.getAuthentication();
+        SecurityContext sc = SecurityContextHolder.getContext();
+        Authentication authentication = sc.getAuthentication();
         log.info(">>>>>>>>>  AUTHORITIES: {}", authentication.getAuthorities());
         List<String> roles = authentication.getAuthorities().stream()
-                .map(GrantedAuthority::getAuthority).toList();
+                .map(GrantedAuthority::getAuthority)
+                .toList();
         return roles.contains(targetAuthRole);
     }
 }

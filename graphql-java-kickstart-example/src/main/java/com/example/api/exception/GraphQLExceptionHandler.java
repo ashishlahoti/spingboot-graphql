@@ -25,7 +25,8 @@ public class GraphQLExceptionHandler {
             IllegalArgumentException.class,
             CoercingParseValueException.class,
             InvalidFormatException.class,
-            DateTimeParseException.class
+            DateTimeParseException.class,
+            IllegalAccessException.class
     })
     public ThrowableGraphQLError handle(Exception e) {
         log.warn("handle Exception: {}", e.getMessage());

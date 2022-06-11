@@ -1,4 +1,4 @@
-package com.example.api.config.graphQL;
+package com.example.api.config.graphQL.directives;
 
 import graphql.schema.DataFetcher;
 import graphql.schema.GraphQLFieldDefinition;
@@ -24,7 +24,7 @@ public class ValidateUserInputDirective implements SchemaDirectiveWiring {
         DataFetcher<?> originalFetcher = env.getCodeRegistry().getDataFetcher(parentType, field);
 
         DataFetcher<?> newDataFetcher = dataFetchingEnvironment -> {
-            Map userInput = (Map) dataFetchingEnvironment.getArguments().get("input");
+            Map<String, Object> userInput = (Map <String, Object>) dataFetchingEnvironment.getArguments().get("input");
             if (userInput.get("email") != null &&  userInput.get("phone")!= null) {
                 throw new IllegalArgumentException("You must specify either mail or phone, not both at the same time");
             } else {

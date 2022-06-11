@@ -1,4 +1,4 @@
-package com.example.api.config.graphQL;
+package com.example.api.config.graphQL.directives;
 
 import graphql.schema.DataFetcher;
 import graphql.schema.DataFetcherFactories;
